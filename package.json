@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "eslint": "^4.8.0",
-    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-config-standard-preact": "^1.1.6",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.2.0",
@@ -29,15 +29,18 @@
     "exports-loader": "^0.6.4",
     "if-env": "^1.0.0",
     "imports-loader": "^0.7.1",
-    "preact-cli": "^1.4.1"
+    "preact-cli": "^2.1.0"
   },
   "dependencies": {
     "algebra-latex": "^0.5.0",
+    "codemirror": "^5.32.0",
     "file-loader": "^1.1.5",
+    "golden-layout": "^1.5.9",
     "jquery": "^3.2.1",
     "mathquill": "^0.10.1-a",
     "node-sass": "^4.5.3",
     "preact": "^8.2.5",
+    "react-codemirror": "^1.0.0",
     "sass-loader": "^6.0.6",
     "url-loader": "^0.6.2"
   }

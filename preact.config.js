@@ -1,3 +1,5 @@
+import webpack from 'webpack'
+
 /**
  * Function that mutates original webpack config.
  * Supports asynchronous changes when promise is returned.

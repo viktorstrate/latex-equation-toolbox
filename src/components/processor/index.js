@@ -13,13 +13,13 @@ export default class Processor extends Component {
   }
   componentWillReceiveProps (props) {
     console.log(props)
-    if (props.input) {
-      console.log('here first')
-      this.solveLates(props.input)
-    }
+    /* if (props.input) {
+      console.log('here first', props.input)
+      this.solveLatex(props.input)
+    } */
   }
 
-  solveLates (latex) {
+  solveLatex (latex) {
     console.log('here')
     this.setState({
       algebraLatex: new AlgebraLatex(latex)
@@ -31,7 +31,7 @@ export default class Processor extends Component {
     return (
       <div class={style.processor}>
         <span class={style.equalSign}>=</span>
-        <span class={style.result}>123</span>
+        <span class={style.result}>{3}</span>
       </div>
     )
   }

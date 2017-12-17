@@ -1,28 +1,24 @@
 import { h, Component } from 'preact'
 
-import InputField from './inputfield'
-// import Processor from './Processor'
+import setupLayout from './Layout'
 
 export default class App extends Component {
   constructor (props) {
     super(props)
-
-    this.state = {
-      mathInput: ''
-    }
+    this.layout = null
   }
 
   updateMathInput = latex => {
     this.setState({ mathInput: latex })
   }
 
+  componentDidMount () {
+    setupLayout(this.layout)
+  }
+
   render (props, state) {
     return (
-      <div id='app'>
-        <h1>Online Algebra System</h1>
-        <InputField onUpdate={this.updateMathInput} />
-        {/* <Processor input={state.mathInput} /> */}
-      </div>
+      <div ref={layout => { this.layout = layout }} id='app' />
     )
   }
 }
