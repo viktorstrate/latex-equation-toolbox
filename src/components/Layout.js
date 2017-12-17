@@ -3,6 +3,8 @@ import GoldenLayout from 'imports-loader?ReactDOM=react-dom!imports-loader?React
 import 'golden-layout/src/css/goldenlayout-base.css'
 import 'golden-layout/src/css/goldenlayout-dark-theme.css'
 
+import store from '../store'
+
 import VisualInput from './VisualInput'
 import CodeInput from './CodeInput'
 
@@ -12,11 +14,17 @@ const layoutConfig = {
     content: [{
       title: 'Visual Input',
       type: 'react-component',
-      component: 'visual-input'
+      component: 'visual-input',
+      props: {
+        store
+      }
     }, {
       title: 'Code Input',
       type: 'react-component',
-      component: 'code-input'
+      component: 'code-input',
+      props: {
+        store
+      }
     }]
   }]
 }

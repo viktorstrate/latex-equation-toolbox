@@ -7,6 +7,7 @@
     "start": "if-env NODE_ENV=production && yarn run -s serve || yarn run -s dev",
     "build": "preact build --no-prerender",
     "serve": "preact build --no-prerender && preact serve",
+    "deploy": "NODE_ENV=production preact build --no-prerender && gh-pages -d build/",
     "dev": "preact watch",
     "lint": "eslint src",
     "test": "eslint src && preact test"
@@ -27,6 +28,7 @@
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-standard": "^3.0.1",
     "exports-loader": "^0.6.4",
+    "gh-pages": "^1.1.0",
     "if-env": "^1.0.0",
     "imports-loader": "^0.7.1",
     "preact-cli": "^2.1.0"
@@ -41,6 +43,8 @@
     "node-sass": "^4.5.3",
     "preact": "^8.2.5",
     "react-codemirror": "^1.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "sass-loader": "^6.0.6",
     "url-loader": "^0.6.2"
   }

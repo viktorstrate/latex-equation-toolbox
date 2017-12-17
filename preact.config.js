@@ -1,5 +1,3 @@
-import webpack from 'webpack'
-
 /**
  * Function that mutates original webpack config.
  * Supports asynchronous changes when promise is returned.
@@ -16,4 +14,8 @@ export default function (config, env, helpers) {
       name: 'fonts/[name].[ext]'
     }
   })
+
+  if (process.env.NODE_ENV === 'production') {
+    config.output.publicPath = '/latex-equation-toolbox/'
+  }
 }
