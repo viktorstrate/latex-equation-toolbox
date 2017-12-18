@@ -9,7 +9,8 @@ import { actions } from '../../reducers/input'
 import style from './style.sass'
 
 @connect(state => ({
-  latex: state.input.latex
+  latex: state.input.latex,
+  darkTheme: state.general.darkTheme
 }), actions)
 class CodeInput extends Component {
   constructor (props) {
@@ -34,7 +35,7 @@ class CodeInput extends Component {
       <CodeMirror
         mode='stex'
         options={{
-          theme: 'monokai'
+          theme: props.darkTheme ? 'monokai' : 'default'
         }}
         ref={el => { this.codeMirrorElm = el }}
         className={style.codeInput}
