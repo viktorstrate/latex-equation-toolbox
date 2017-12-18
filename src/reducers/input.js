@@ -1,6 +1,6 @@
 
 const initialState = {
-  latex: 'e=mc^{2}'
+  latex: '\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}'
 }
 
 const actionTypes = {

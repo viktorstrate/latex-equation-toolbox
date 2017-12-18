@@ -1,0 +1,98 @@
+[
+  {
+    "code": "\\alpha",
+    "icon": "alpha.svg"
+  },
+  {
+    "code": "\\beta",
+    "icon": "beta.svg"
+  },
+  {
+    "code": "\\chi",
+    "icon": "chi.svg"
+  },
+  {
+    "code": "\\delta",
+    "icon": "delta.svg"
+  },
+  {
+    "code": "\\epsilon",
+    "icon": "epsilon.svg"
+  },
+  {
+    "code": "\\eta",
+    "icon": "eta.svg"
+  },
+  {
+    "code": "\\gamma",
+    "icon": "gamma.svg"
+  },
+  {
+    "code": "\\kappa",
+    "icon": "kappa.svg"
+  },
+  {
+    "code": "\\lambda",
+    "icon": "lambda.svg"
+  },
+  {
+    "code": "\\iota",
+    "icon": "iota.svg"
+  },
+  {
+    "code": "\\mu",
+    "icon": "mu.svg"
+  },
+  {
+    "code": "\\nu",
+    "icon": "nu.svg"
+  },
+  {
+    "code": "\\omega",
+    "icon": "omega.svg"
+  },
+  {
+    "code": "o",
+    "icon": "omicron.svg"
+  },
+  {
+    "code": "\\phi",
+    "icon": "phi.svg"
+  },
+  {
+    "code": "\\pi",
+    "icon": "pi.svg"
+  },
+  {
+    "code": "\\psi",
+    "icon": "psi.svg"
+  },
+  {
+    "code": "\\rho",
+    "icon": "rho.svg"
+  },
+  {
+    "code": "\\sigma",
+    "icon": "sigma.svg"
+  },
+  {
+    "code": "\\tau",
+    "icon": "tau.svg"
+  },
+  {
+    "code": "\\theta",
+    "icon": "theta.svg"
+  },
+  {
+    "code": "\\upsilon",
+    "icon": "upsilon.svg"
+  },
+  {
+    "code": "\\xi",
+    "icon": "xi.svg"
+  },
+  {
+    "code": "\\zeta",
+    "icon": "zeta.svg"
+  }
+]

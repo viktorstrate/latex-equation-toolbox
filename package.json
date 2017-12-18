@@ -16,7 +16,10 @@
     "extends": [
       "standard",
       "standard-preact"
-    ]
+    ],
+    "rules": {
+      "react/jsx-no-bind": false
+    }
   },
   "devDependencies": {
     "eslint": "^4.8.0",
@@ -35,6 +38,7 @@
   },
   "dependencies": {
     "algebra-latex": "^0.5.0",
+    "classnames": "^2.2.5",
     "codemirror": "^5.32.0",
     "file-loader": "^1.1.5",
     "golden-layout": "^1.5.9",

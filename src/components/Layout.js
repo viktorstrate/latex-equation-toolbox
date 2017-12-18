@@ -7,24 +7,33 @@ import store from '../store'
 
 import VisualInput from './VisualInput'
 import CodeInput from './CodeInput'
+import Catalogue from './Catalogue'
 
 const layoutConfig = {
   content: [{
     type: 'row',
     content: [{
-      title: 'Visual Input',
-      type: 'react-component',
-      component: 'visual-input',
-      props: {
-        store
-      }
+      type: 'column',
+      content: [{
+        title: 'Visual Input',
+        type: 'react-component',
+        component: 'visual-input',
+        props: {
+          store
+        }
+      }, {
+        title: 'Code Input',
+        type: 'react-component',
+        component: 'code-input',
+        props: {
+          store
+        }
+      }]
     }, {
-      title: 'Code Input',
+      title: 'Catalogue',
       type: 'react-component',
-      component: 'code-input',
-      props: {
-        store
-      }
+      component: 'catalogue',
+      props: { store }
     }]
   }]
 }
@@ -34,6 +43,7 @@ export default (element) => {
 
   layout.registerComponent('visual-input', VisualInput)
   layout.registerComponent('code-input', CodeInput)
+  layout.registerComponent('catalogue', Catalogue)
 
   layout.init()
 }

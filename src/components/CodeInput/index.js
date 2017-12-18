@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/stex/stex'
+import 'codemirror/theme/monokai'
 
 import { actions } from '../../reducers/input'
 import style from './style.sass'
@@ -30,7 +31,15 @@ class CodeInput extends Component {
     }
 
     return (
-      <CodeMirror mode='stex' ref={el => { this.codeMirrorElm = el }} className={style.codeInput} value={this.props.latex} onChange={this.onInputChange} />
+      <CodeMirror
+        mode='stex'
+        options={{
+          theme: 'monokai'
+        }}
+        ref={el => { this.codeMirrorElm = el }}
+        className={style.codeInput}
+        value={this.props.latex}
+        onChange={this.onInputChange} />
     )
   }
 }

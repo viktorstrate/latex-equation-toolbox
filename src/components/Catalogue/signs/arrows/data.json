@@ -1,0 +1,66 @@
+[
+  {
+    "code": "\\Downarrow",
+    "icon": "double-down.svg"
+  },
+  {
+    "code": "\\Leftarrow",
+    "icon": "double-left.svg"
+  },
+  {
+    "code": "\\Leftrightarrow",
+    "icon": "double-leftright.svg"
+  },
+  {
+    "code": "\\Rightarrow",
+    "icon": "double-right.svg"
+  },
+  {
+    "code": "\\Uparrow",
+    "icon": "double-up.svg"
+  },
+  {
+    "code": "\\Updownarrow",
+    "icon": "double-updown.svg"
+  },
+  {
+    "code": "\\downarrow",
+    "icon": "down.svg"
+  },
+  {
+    "code": "\\leftharpoondown",
+    "icon": "harpoon-leftdown.svg"
+  },
+  {
+    "code": "\\leftrightharpoons",
+    "icon": "harpoon-leftright.svg"
+  },
+  {
+    "code": "\\leftharpoonup",
+    "icon": "harpoon-leftup.svg"
+  },
+  {
+    "code": "\\rightharpoondown",
+    "icon": "harpoon-rightdown.svg"
+  },
+  {
+    "code": "\\rightleftharpoons",
+    "icon": "harpoon-rightdown.svg"
+  },
+  {
+    "code": "\\rightharpoonup",
+    "icon": "harpoon-rightup.svg"
+  },
+  {
+    "code": "\\leftarrow",
+    "icon": "left.svg"
+  },
+  {
+    "code": "\\uparrow",
+    "icon": "up.svg"
+  },
+  {
+    "code": "\\updownarrow",
+    "icon": "updown.svg"
+  }
+]
