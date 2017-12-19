@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Square@64x64</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Square@64x64" fill="#000000" fill-rule="nonzero">
+            <g id="leftright" transform="translate(32.500000, 32.500000) rotate(-270.000000) translate(-32.500000, -32.500000) translate(9.000000, 22.000000)">
+                <path d="M38.9968421,12.2913876 L7.5231579,12.2913876 L13.6308134,18.7842105 L11.5949282,20.4899522 C6.8628708,15.8129187 6.3676555,15.3727273 0.26,10.5856459 C6.697799,5.523445 7.41311,4.8631579 11.5949282,0.6813397 L13.6308134,2.3870813 L7.5231579,8.8799043 L38.9968421,8.8799043 L32.8341627,2.3870813 L34.8700478,0.6813397 C39.10689,4.8631579 39.822201,5.523445 46.26,10.5856459 C40.1523445,15.3727273 39.6571292,15.8129187 34.8700478,20.4899522 L32.8341627,18.7842105 L38.9968421,12.2913876 Z" id="↔"></path>
+            </g>
+        </g>
+        <path d="" id="Path-2" stroke="#979797"></path>
+    </g>
+</svg>

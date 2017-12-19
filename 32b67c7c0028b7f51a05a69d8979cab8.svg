@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Square@64x64</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Square@64x64" fill="#000000">
+            <path d="M54.8942287,33.6312337 C48.9677779,35.7971254 44.3385515,39.3077212 41.0064106,44.1631266 L38.471616,44.1631266 C39.6140643,40.7595826 41.5300167,37.5464949 44.2195304,34.523767 L8.6253026,34.523767 L8.6253026,31.0250365 L44.2195304,31.0250365 C41.5300167,28.0023086 39.6140643,24.7773206 38.471616,21.3499756 L41.0064106,21.3499756 C44.3385515,26.205381 48.9677779,29.7159768 54.8942287,31.8818685 L54.8942287,33.6312337 Z" id="→" transform="translate(31.759766, 32.756551) rotate(-90.000000) translate(-31.759766, -32.756551) "></path>
+        </g>
+        <path d="" id="Path-2" stroke="#979797"></path>
+    </g>
+</svg>
