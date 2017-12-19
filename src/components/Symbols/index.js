@@ -2,20 +2,20 @@ import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 
-import { actions } from '../../reducers/catalogue'
+import { actions } from '../../reducers/symbols'
 import { actions as inputActions } from '../../reducers/input'
 import style from './style.sass'
 
 const changeLatex = inputActions.changeLatex
 
 @connect(state => ({
-  ...state.catalogue,
+  ...state.symbols,
   latex: state.input.latex
 }), {
   ...actions,
   changeLatex
 })
-class Catalogue extends Component {
+class Symbols extends Component {
   constructor (props) {
     super(props)
 
@@ -36,7 +36,7 @@ class Catalogue extends Component {
       const icon = require('./signs/' + name + '/' + item.icon)
       return <div
         style={self.props.visibleTabs[name] ? visibleStyle : null}
-        className={classnames(style['catalogue-item'])}
+        className={classnames(style['item'])}
         key={item.code}
         onClick={this.insertSymbol.bind(null, item.code)}>
         <img src={icon} />
@@ -55,7 +55,11 @@ class Catalogue extends Component {
 
     let elements = categories.map(category => (
       <div>
-        <div onClick={this.toggleTab} >{category}</div>
+        <div
+          className={style.category}
+          onClick={this.toggleTab} >
+          {category}
+        </div>
         {this.loadCategory(category)}
       </div>
     ))
@@ -85,4 +89,4 @@ class Catalogue extends Component {
   }
 }
 
-export default Catalogue
+export default Symbols

@@ -11,6 +11,8 @@ export default (props) => (
         {props.latex}
       </Node>
     </Context>
-    <CopyButton value={props.latex} name='Copy as latex' />
+    <div className={style.center}>
+      <CopyButton value={props.latex} name='Copy as latex' />
+    </div>
   </div>
 )

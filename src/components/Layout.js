@@ -8,7 +8,7 @@ import { actions as layoutActions } from '../reducers/layout'
 
 import VisualInput from './VisualInput'
 import CodeInput from './CodeInput'
-import Catalogue from './Catalogue'
+import Symbols from './Symbols'
 import Mathjax from './Mathjax'
 
 export let layout = null
@@ -16,10 +16,10 @@ export const views = {
   editor: [
     ['visual-input', VisualInput, 'Visual input'],
     ['code-input', CodeInput, 'Code input'],
-    ['catalogue', Catalogue, 'Catalogue']
+    ['symbols', Symbols, 'Symbols']
   ],
   viewer: [
-    ['mathjax', Mathjax, 'Mathjax view']
+    ['mathjax', Mathjax, 'Preview']
   ]
 }
 
@@ -46,16 +46,16 @@ const layoutConfig = {
     }, {
       type: 'column',
       content: [{
-        title: 'Mathjax view',
+        title: 'Preview',
         type: 'react-component',
         component: 'mathjax',
         props: {
           store
         }
       }, {
-        title: 'Catalogue',
+        title: 'Symbols',
         type: 'react-component',
-        component: 'catalogue',
+        component: 'symbols',
         props: { store }
       }]
     }]

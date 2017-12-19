@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import MathField from './MathField'
 import { simplify } from './solve'
 
-import './style.sass'
+import style from './style.sass'
 
 @connect(store => ({
   latex: store.input.latex
@@ -23,14 +23,16 @@ export default class Mathjax extends Component {
         solutionEl = <MathField latex={solution} />
       } catch (e) {
         solution = e.message
-        solutionEl = <div>{solution}</div>
+        solutionEl = <div className={style.center}>{solution}</div>
       }
     }
 
     return (
-      <div>
-        Math: {mathEl}
-        Simplified: {solutionEl}
+      <div className={style.container}>
+        <div>
+          <div className={style.header}>Math:</div> {mathEl}
+          <div className={style.header}>Simplified:</div> {solutionEl}
+        </div>
       </div>
     )
   }
