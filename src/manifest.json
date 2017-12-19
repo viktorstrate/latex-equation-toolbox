@@ -1,6 +1,6 @@
 {
-  "name": "Online Algebra System",
-  "short_name": "OnlineAlgebraSystem",
+  "name": "Latex Equation Toolbox",
+  "short_name": "Equation Toolbox",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

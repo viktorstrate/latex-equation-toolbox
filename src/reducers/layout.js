@@ -1,17 +1,17 @@
 const initialState = {
-  latex: '\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}'
+  loaded: false
 }
 
 const actionTypes = {
-  CHANGE_LATEX: 'input@changeLatex'
+  LOADED: 'layout@loaded'
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.CHANGE_LATEX:
+    case actionTypes.LOADED:
       return {
         ...state,
-        latex: action.latex
+        loaded: true
       }
     default:
       return state
@@ -19,8 +19,7 @@ export default (state = initialState, action) => {
 }
 
 export const actions = {
-  changeLatex: (latex) => ({
-    type: actionTypes.CHANGE_LATEX,
-    latex
+  load: () => ({
+    type: actionTypes.LOADED
   })
 }
