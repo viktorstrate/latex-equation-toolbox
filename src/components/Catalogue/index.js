@@ -78,7 +78,7 @@ class Catalogue extends Component {
 
   render () {
     return (
-      <div>
+      <div className={style.container}>
         {this.loadCategories()}
       </div>
     )

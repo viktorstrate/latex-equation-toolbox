@@ -44,10 +44,20 @@ const layoutConfig = {
         }
       }]
     }, {
-      title: 'Catalogue',
-      type: 'react-component',
-      component: 'catalogue',
-      props: { store }
+      type: 'column',
+      content: [{
+        title: 'Mathjax view',
+        type: 'react-component',
+        component: 'mathjax',
+        props: {
+          store
+        }
+      }, {
+        title: 'Catalogue',
+        type: 'react-component',
+        component: 'catalogue',
+        props: { store }
+      }]
     }]
   }]
 }

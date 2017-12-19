@@ -1,8 +1,8 @@
 
 const initialState = {
   visibleTabs: {
-    arrows: false,
-    greek: false
+    arrows: true,
+    greek: true
   }
 }
 

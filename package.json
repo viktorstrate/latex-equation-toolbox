@@ -37,7 +37,8 @@
     "preact-cli": "^2.1.0"
   },
   "dependencies": {
-    "algebra-latex": "^0.5.0",
+    "algebra-latex": "^0.5.1",
+    "algebra.js": "^0.2.6",
     "classnames": "^2.2.5",
     "codemirror": "^5.32.0",
     "file-loader": "^1.1.5",
@@ -47,6 +48,7 @@
     "mathquill": "^0.10.1-a",
     "node-sass": "^4.5.3",
     "preact": "^8.2.5",
+    "react-clipboard.js": "^1.1.3",
     "react-codemirror": "^1.0.0",
     "react-mathjax": "^0.1.1",
     "react-redux": "^5.0.6",
