@@ -6,20 +6,20 @@ import 'golden-layout/src/css/goldenlayout-dark-theme.css'
 import store from '../store'
 import { actions as layoutActions } from '../reducers/layout'
 
-import VisualInput from './VisualInput'
-import CodeInput from './CodeInput'
-import Symbols from './Symbols'
-import Mathjax from './Mathjax'
+const VisualInput = import('./VisualInput')
+const CodeInput = import('./CodeInput')
+const Symbols = import('./Symbols')
+const Mathjax = import('./Mathjax')
 
 export let layout = null
 export const views = {
   editor: [
-    ['visual-input', VisualInput, 'Visual input'],
-    ['code-input', CodeInput, 'Code input'],
-    ['symbols', Symbols, 'Symbols']
+    ['visual-input', 0, 'Visual input'],
+    ['code-input', 1, 'Code input'],
+    ['symbols', 2, 'Symbols']
   ],
   viewer: [
-    ['mathjax', Mathjax, 'Preview']
+    ['mathjax', 3, 'Preview']
   ]
 }
 
@@ -63,13 +63,19 @@ const layoutConfig = {
 }
 
 export default (element) => {
-  layout = new GoldenLayout(layoutConfig, element)
-  Object.keys(views).forEach(category => {
-    views[category].forEach(component => {
-      layout.registerComponent(component[0], component[1])
-    })
-  })
+  Promise.all([
+    VisualInput, CodeInput, Symbols, Mathjax
+  ]).then(values => {
+    console.log(values)
 
-  layout.init()
-  store.dispatch(layoutActions.load())
+    layout = new GoldenLayout(layoutConfig, element)
+    Object.keys(views).forEach(category => {
+      views[category].forEach(component => {
+        layout.registerComponent(component[0], values[component[1]].default || values[component[1]])
+      })
+    })
+
+    layout.init()
+    store.dispatch(layoutActions.load())
+  })
 }

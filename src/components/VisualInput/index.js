@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 // eslint-disable-next-line
 import MathQuill from 'exports-loader?window.MathQuill!imports-loader?window.jQuery=jquery!mathquill/build/mathquill.js'
+import 'mathquill/build/mathquill.css'
+
 import style from './style.sass'
 
 import { actions } from '../../reducers/input'
