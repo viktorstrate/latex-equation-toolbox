@@ -6,20 +6,24 @@ import 'golden-layout/src/css/goldenlayout-dark-theme.css'
 import store from '../store'
 import { actions as layoutActions } from '../reducers/layout'
 
-const VisualInput = import('./VisualInput')
-const CodeInput = import('./CodeInput')
-const Symbols = import('./Symbols')
-const Mathjax = import('./Mathjax')
+const viewComponents = {
+  'visual-input': import('./VisualInput'),
+  'code-input': import('./CodeInput'),
+  'symbols': import('./Symbols'),
+  'mathjax': import('./Mathjax'),
+  'equations': import('./Equations')
+}
 
 export let layout = null
 export const views = {
-  editor: [
-    ['visual-input', 0, 'Visual input'],
-    ['code-input', 1, 'Code input'],
-    ['symbols', 2, 'Symbols']
+  Editor: [
+    ['visual-input', 'Visual input'],
+    ['code-input', 'Code input'],
+    ['symbols', 'Symbols']
   ],
-  viewer: [
-    ['mathjax', 3, 'Preview']
+  View: [
+    ['mathjax', 'Preview'],
+    ['equations', 'Equations']
   ]
 }
 
@@ -46,12 +50,22 @@ const layoutConfig = {
     }, {
       type: 'column',
       content: [{
-        title: 'Preview',
-        type: 'react-component',
-        component: 'mathjax',
-        props: {
-          store
-        }
+        type: 'stack',
+        content: [{
+          title: 'Preview',
+          type: 'react-component',
+          component: 'mathjax',
+          props: {
+            store
+          }
+        }, {
+          title: 'Equations',
+          type: 'react-component',
+          component: 'equations',
+          props: {
+            store
+          }
+        }]
       }, {
         title: 'Symbols',
         type: 'react-component',
@@ -63,15 +77,13 @@ const layoutConfig = {
 }
 
 export default (element) => {
-  Promise.all([
-    VisualInput, CodeInput, Symbols, Mathjax
-  ]).then(values => {
-    console.log(values)
-
+  Promise.all(Object.values(viewComponents)).then(values => {
     layout = new GoldenLayout(layoutConfig, element)
     Object.keys(views).forEach(category => {
       views[category].forEach(component => {
-        layout.registerComponent(component[0], values[component[1]].default || values[component[1]])
+        const i = Object.values(viewComponents).indexOf(viewComponents[component[0]])
+        const value = values[i]
+        layout.registerComponent(component[0], value.default || value)
       })
     })
 

@@ -22,7 +22,7 @@ export default class Toolbar extends Component {
     if (this.props.layoutLoaded) {
       console.log('Add layout loaded')
       layout.createDragSource(element, {
-        title: component[2],
+        title: component[1],
         type: 'react-component',
         component: component[0],
         props: {
@@ -36,20 +36,22 @@ export default class Toolbar extends Component {
     const self = this
     const viewElements = Object.keys(views).map(category => {
       const elements = views[category].map(component => {
-        const element = <div ref={el => { self.registerDragSource(el, component) }} className={style.component} key={component[0]}>{component[2]}</div>
+        const element = <div ref={el => {
+          self.registerDragSource(el, component)
+        }} className={style.component} key={component[0]}>{component[1]}</div>
 
         return element
       })
 
       return (
         <div className={style.category}>
+          {category}
           {elements}
         </div>
       )
     })
     return (
       <div className={style.header}>
-        Header
         { viewElements }
       </div>
     )

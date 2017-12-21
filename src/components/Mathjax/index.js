@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import MathField from './MathField'
 import { simplify } from './solve'
+import AlgebraLatex from 'algebra-latex'
 
 import style from './style.sass'
 
@@ -23,7 +24,12 @@ export default class Mathjax extends Component {
         solutionEl = <MathField latex={solution} />
       } catch (e) {
         solution = e.message
-        solutionEl = <div className={style.center}>{solution}</div>
+        const asciiMath = new AlgebraLatex(props.latex).toMath()
+        solutionEl = (
+          <div className={style.center}>
+            {solution}<br />
+            <i>{asciiMath}</i>
+          </div>)
       }
     }
 
