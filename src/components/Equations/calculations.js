@@ -1,6 +1,6 @@
 import AlgebraLatex from 'algebra-latex'
 import math from 'mathjs'
-import _ from 'lodash'
+import uniq from 'lodash/uniq'
 
 export const getVariables = (latex) => {
   let parsedMath = new AlgebraLatex(latex)
@@ -16,7 +16,7 @@ export const getVariables = (latex) => {
   })
 
   variables = variables.map(vars => vars.name)
-  variables = _.uniq(variables) // remove duplicates
+  variables = uniq(variables) // remove duplicates
   variables = variables.sort()
 
   console.log(variables)

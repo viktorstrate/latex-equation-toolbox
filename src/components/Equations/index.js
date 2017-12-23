@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import { getVariables, solve } from './calculations'
 import MathField from '../Mathjax/MathField'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import { actions } from '../../reducers/equations'
 
@@ -26,7 +26,7 @@ export default class Equations extends Component {
 
   render (props) {
     const calculatedVariables = getVariables(props.latex)
-    if (!_.isEqual(Object.keys(props.variables), calculatedVariables)) {
+    if (!isEqual(Object.keys(props.variables), calculatedVariables)) {
       props.changeVariables(calculatedVariables)
     }
 
