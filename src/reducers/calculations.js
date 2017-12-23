@@ -1,10 +1,12 @@
 const initialState = {
-  variables: {}
+  variables: {},
+  variable: null
 }
 
 const actionTypes = {
-  CHANGE_VARIABLES: 'equations@changeVariables',
-  SET_VARIABLE: 'equations@setVariable'
+  CHANGE_VARIABLES: 'calculations@changeVariables',
+  SET_VARIABLE: 'calculations@setVariable',
+  SOLVE_VARIABLE: 'calculations@solveVariable'
 }
 
 export default (state = initialState, action) => {
@@ -23,12 +25,22 @@ export default (state = initialState, action) => {
         variables: newVars
       }
     case actionTypes.SET_VARIABLE:
+      let variable = state.variable
+      if (!Object.keys(state.variables).includes(state.variable)) {
+        variable = null
+      }
       return {
         ...state,
         variables: {
           ...state.variables,
-          [action.variable]: action.value
+          [action.variable]: action.value,
+          variable
         }
+      }
+    case actionTypes.SOLVE_VARIABLE:
+      return {
+        ...state,
+        variable: action.variable
       }
     default:
       return state
@@ -44,5 +56,9 @@ export const actions = {
     type: actionTypes.SET_VARIABLE,
     variable,
     value
+  }),
+  solveVariable: (variable) => ({
+    type: actionTypes.SOLVE_VARIABLE,
+    variable
   })
 }

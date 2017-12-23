@@ -1,27 +1,23 @@
 import { h, Component } from 'preact'
 import { connect } from 'react-redux'
-import { getVariables, solve } from './calculations'
-import MathField from '../Mathjax/MathField'
+import { getVariables, solveVariable } from '../calculations'
 import isEqual from 'lodash/isEqual'
+import MathField from '../Mathjax/MathField'
 
-import { actions } from '../../reducers/equations'
+import { actions } from '../../reducers/calculations'
 
 @connect(store => ({
-  ...store.equations,
+  ...store.calculations,
   latex: store.input.latex
 }), actions)
 export default class Equations extends Component {
   constructor (props) {
     super(props)
-    this.inputChanged = this.inputChanged.bind(this)
+    this.selectVariable = this.selectVariable.bind(this)
   }
 
-  inputChanged (event, variable) {
-    if (!isNaN(Number(event.target.value))) {
-      this.props.setVariable(variable, Number(event.target.value))
-    } else {
-      this.props.setVariable(variable, null)
-    }
+  selectVariable (variable) {
+    this.props.solveVariable(variable)
   }
 
   render (props) {
@@ -30,23 +26,22 @@ export default class Equations extends Component {
       props.changeVariables(calculatedVariables)
     }
 
-    const self = this
-    console.log('input changed??', self.inputChanged)
-    const inputs = Object.keys(props.variables)
-      .map(v => (
-        <div key={v}>
-          {v}:
-          <input value={props.variables[v]} onChange={(x) => { self.inputChanged(x, v) }} />
-        </div>
-      ))
+    const variableButtons = Object.keys(props.variables).map(v => {
+      let style = null
+      if (v === props.variable) {
+        style = {
+          'background-color': 'red'
+        }
+      }
+      return <button key={v} style={style} onClick={x => { this.selectVariable(v) }} >{v}</button>
+    })
 
     return (
       <div>
-        <MathField latex={solve(props.latex, props.variables)} />
-        {inputs}
-        <hr />
+        <MathField latex={solveVariable(props.latex, props.variable)} />
         Solve for variable
-        TODO
+        <button onClick={x => { this.selectVariable(null) }} >None</button>
+        {variableButtons}
       </div>
     )
   }

@@ -61,4 +61,5 @@ typings/
 
 .DS_Store
 .idea/
+.vscode/
 

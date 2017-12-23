@@ -1,5 +1,5 @@
 const initialState = {
-  latex: '\\frac{-b\\pm\\sqrt{b^2-4\\ a\\ c}}{2a}'
+  latex: '\\cos\\left(A\\right)=\\frac{b^2+c^2-a^2}{2\\cdot b\\cdot c}'
 }
 
 const actionTypes = {

@@ -10,7 +10,7 @@ const viewComponents = {
   'visual-input': import('./VisualInput'),
   'code-input': import('./CodeInput'),
   'symbols': import('./Symbols'),
-  'mathjax': import('./Mathjax'),
+  'preview': import('./Preview'),
   'equations': import('./Equations')
 }
 
@@ -22,7 +22,7 @@ export const views = {
     ['symbols', 'Symbols']
   ],
   View: [
-    ['mathjax', 'Preview'],
+    ['preview', 'Preview'],
     ['equations', 'Equations']
   ]
 }
@@ -54,7 +54,7 @@ const layoutConfig = {
         content: [{
           title: 'Preview',
           type: 'react-component',
-          component: 'mathjax',
+          component: 'preview',
           props: {
             store
           }
