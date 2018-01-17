@@ -1,9 +1,9 @@
-interface State {
+export interface CalculationState {
   variables: any,
   variable?: string
 }
 
-const initialState: State = {
+const initialState: CalculationState = {
   variables: {},
   variable: null
 }
@@ -14,7 +14,7 @@ const actionTypes = {
   SOLVE_VARIABLE: 'calculations@solveVariable'
 }
 
-export default (state: State = initialState, action) => {
+export default (state: CalculationState = initialState, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_VARIABLES:
       let newVars = {}

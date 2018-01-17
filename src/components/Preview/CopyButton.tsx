@@ -1,8 +1,15 @@
 import { h } from 'preact'
 import Clipboard from 'react-clipboard.js'
 
-export default (props) => (
+interface CopyButtonProps {
+  value: string,
+  name: string
+}
+
+const CopyButton = (props: CopyButtonProps) => (
   <Clipboard data-clipboard-text={props.value}>
     {props.name}
   </Clipboard>
 )
+
+export default CopyButton
