@@ -1,10 +1,16 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, compose, Store, Middleware } from 'redux'
 import rootReducer from './reducers'
 
 const initialState = {}
 
 const enhancers = []
-const middleware = []
+const middleware: Middleware[] = []
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__: string
+  }
+}
 
 if (process.env.NODE_ENV !== 'production') {
   const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__

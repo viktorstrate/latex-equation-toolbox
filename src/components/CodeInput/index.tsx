@@ -1,18 +1,31 @@
 import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import CodeMirror from 'react-codemirror'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/stex/stex'
-import 'codemirror/theme/monokai'
 
 import { actions } from '../../reducers/input'
-import style from './style.sass'
+
+require('codemirror/lib/codemirror.css')
+require('codemirror/mode/stex/stex')
+require('codemirror/theme/monokai.css')
+
+const style = require('./style.sass')
+
+interface PropsType {
+  latex:string,
+  changeLatex(value:string):void
+}
+
+interface StateType {
+
+}
 
 @connect(state => ({
   latex: state.input.latex,
   darkTheme: state.general.darkTheme
 }), actions)
-class CodeInput extends Component {
+class CodeInput extends Component<PropsType, StateType> {
+  codeMirrorElm:any
+
   constructor (props) {
     super(props)
 

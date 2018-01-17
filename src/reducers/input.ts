@@ -1,4 +1,10 @@
-const initialState = {
+import { Reducer } from "redux";
+
+interface InputState {
+  latex: string
+}
+
+const initialState: InputState = {
   latex: '\\cos\\left(A\\right)=\\frac{b^2+c^2-a^2}{2\\cdot b\\cdot c}'
 }
 
@@ -6,7 +12,7 @@ const actionTypes = {
   CHANGE_LATEX: 'input@changeLatex'
 }
 
-export default (state = initialState, action) => {
+const reducer:Reducer<InputState> = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_LATEX:
       return {
@@ -18,8 +24,10 @@ export default (state = initialState, action) => {
   }
 }
 
+export default reducer
+
 export const actions = {
-  changeLatex: (latex) => ({
+  changeLatex: (latex: string) => ({
     type: actionTypes.CHANGE_LATEX,
     latex
   })

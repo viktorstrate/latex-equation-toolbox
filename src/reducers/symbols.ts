@@ -1,5 +1,18 @@
+import { Reducer } from "redux";
 
-const initialState = {
+enum Tabs {
+  arrows, greek
+}
+
+// TODO change visibleTabs to an array of only active tabs instead of object
+interface SymbolState {
+  visibleTabs: {
+    arrows: boolean,
+    greek: boolean
+  }
+}
+
+const initialState: SymbolState = {
   visibleTabs: {
     arrows: true,
     greek: true
@@ -10,7 +23,7 @@ const actionTypes = {
   TOGGLE_TAB: 'catalogue@toggleTab'
 }
 
-export default (state = initialState, action) => {
+const reducer: Reducer<SymbolState> = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.TOGGLE_TAB:
       return {
@@ -25,8 +38,10 @@ export default (state = initialState, action) => {
   }
 }
 
+export default reducer
+
 export const actions = {
-  toggleTab: (tab) => ({
+  toggleTab: (tab: Tabs) => ({
     type: actionTypes.TOGGLE_TAB,
     tab
   })

@@ -1,9 +1,10 @@
 import AlgebraLatex from 'algebra-latex'
-import math from 'mathjs'
 import CQ from 'coffeequate'
-import uniq from 'lodash/uniq'
 
-export const getVariables = (latex) => {
+const uniq = require('lodash/uniq')
+const math = require('mathjs')
+
+export const getVariables = (latex: string):string[] => {
   latex = latex.replace('=', '+') // Used to parse equations
   let parsedMath = new AlgebraLatex(latex)
   parsedMath = parsedMath.toMath()
@@ -26,7 +27,7 @@ export const getVariables = (latex) => {
   return variables
 }
 
-export const solveVariables = (latex, variables) => {
+export const solveVariables = (latex:string, variables:string[]) => {
   let parsedMath = new AlgebraLatex(latex)
   parsedMath = parsedMath.toMath()
   try {
@@ -40,7 +41,7 @@ export const solveVariables = (latex, variables) => {
   return math.simplify(parsedMath, variables).toTex()
 }
 
-export const solveVariable = (latex, variable) => {
+export const solveVariable = (latex:string, variable:string):string => {
   if (variable === null || variable === '') {
     return latex
   }
@@ -60,7 +61,7 @@ export const solveVariable = (latex, variable) => {
       if (prev === null) {
         return curr
       } else {
-        return prev + '\vee ' + curr
+        return prev + '\\vee ' + curr
       }
     }, null).toLaTeX()
   } catch (e) {
