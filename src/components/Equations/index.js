@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 import { getVariables, solveVariable } from '../calculations'
 import isEqual from 'lodash/isEqual'
-import MathField from '../Mathjax/MathField'
+import MathField from '../Preview/MathField'
 
 import { actions } from '../../reducers/calculations'
 

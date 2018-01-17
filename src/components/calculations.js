@@ -7,6 +7,7 @@ export const getVariables = (latex) => {
   latex = latex.replace('=', '+') // Used to parse equations
   let parsedMath = new AlgebraLatex(latex)
   parsedMath = parsedMath.toMath()
+  console.log(parsedMath)
   try {
     parsedMath = math.parse(parsedMath)
   } catch (e) {
