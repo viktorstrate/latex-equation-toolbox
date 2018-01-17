@@ -8,6 +8,7 @@
     "jsx": "react",
     "jsxFactory": "h",
     "allowJs": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "typeRoots" : ["./typings", "./node_modules/@types/"]
   }
 }

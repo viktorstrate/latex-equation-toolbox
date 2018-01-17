@@ -11,7 +11,7 @@
     "analyze": "ANALYZE=1 preact watch",
     "dev": "preact watch",
     "lint": "eslint src",
-    "test": "eslint src && preact test"
+    "test": "jest ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -24,7 +24,9 @@
   },
   "devDependencies": {
     "@types/codemirror": "^0.0.55",
+    "@types/jquery": "^3.2.18",
     "@types/lodash": "^4.14.92",
+    "@types/mathjax": "^0.0.32",
     "@types/mathjs": "^0.0.37",
     "@types/redux": "^3.6.0",
     "@types/webpack": "^3.8.2",
