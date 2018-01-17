@@ -1,4 +1,10 @@
-const initialState = {
+import { Reducer } from "redux";
+
+interface LayoutState {
+  loaded: boolean
+}
+
+const initialState: LayoutState = {
   loaded: false
 }
 
@@ -6,7 +12,7 @@ const actionTypes = {
   LOADED: 'layout@loaded'
 }
 
-export default (state = initialState, action) => {
+const reducer:Reducer<LayoutState> = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOADED:
       return {
@@ -17,6 +23,8 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+export default reducer
 
 export const actions = {
   load: () => ({

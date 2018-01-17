@@ -1,4 +1,9 @@
-const initialState = {
+interface State {
+  variables: any,
+  variable?: string
+}
+
+const initialState: State = {
   variables: {},
   variable: null
 }
@@ -9,7 +14,7 @@ const actionTypes = {
   SOLVE_VARIABLE: 'calculations@solveVariable'
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_VARIABLES:
       let newVars = {}
@@ -48,16 +53,16 @@ export default (state = initialState, action) => {
 }
 
 export const actions = {
-  changeVariables: (variables) => ({
+  changeVariables: (variables: string[]) => ({
     type: actionTypes.CHANGE_VARIABLES,
     variables
   }),
-  setVariable: (variable, value) => ({
+  setVariable: (variable: string, value: string) => ({
     type: actionTypes.SET_VARIABLE,
     variable,
     value
   }),
-  solveVariable: (variable) => ({
+  solveVariable: (variable: string) => ({
     type: actionTypes.SOLVE_VARIABLE,
     variable
   })

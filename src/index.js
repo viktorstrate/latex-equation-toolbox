@@ -1,4 +1,4 @@
-import './style/'
+import './style/index.sass'
 
 import App from './components/App'
 
