@@ -1,10 +1,12 @@
 import { h, Component } from 'preact'
 import { connect } from 'react-redux'
 
-import './mathjax-setup'
+import loadMj2img from './mathjax-setup'
+import { actions } from '../../reducers/image-export'
 
 interface PropsType {
-  latex: string
+  latex: string,
+  dispatch(action: any)
 }
 
 declare global {
@@ -14,20 +16,41 @@ declare global {
 }
 
 @connect(store => ({
-  latex: store.input.latex
+  latex: store.input.latex,
+  imageExport: store.imageExport
 }))
 export default class ImageExport extends Component<PropsType, any> {
 
+  oldLatex = ''
+
   generatePNG() {
+
+    if (this.props.latex === this.oldLatex) {
+      return
+    }
+
     console.log('Generate png')
-    // loadFunc()(`\\[${this.props.latex}\\]`, function(output){
-    //   console.log('here', output)
-    //   //document.getElementById("target").innerHTML = output.svg;
-    // })
+
+    let dispatch = this.props.dispatch
+
+    loadMj2img()(`\\[${this.props.latex}\\]`, function(output){
+      console.log('here', output)
+      dispatch(actions.updateImage(output.img, output.svg))
+      //document.getElementById("target").innerHTML = output.svg;
+    })
   }
 
   render (props) {
     this.generatePNG()
-    return <div>Image export view<br/>{props.latex}</div>
+
+    this.oldLatex = this.props.latex
+    return <div>
+      Image export view<br/>
+      <div style={{
+        backgroundColor: 'white'
+      }}>
+      <img src={props.imageExport.png} />
+      </div>
+    </div>
   }
 }

@@ -7,6 +7,7 @@ import Toolbar from './Toolbar'
 
 import style from './layout.sass'
 
+
 export default class App extends Component {
   constructor (props) {
     super(props)
