@@ -19,6 +19,7 @@ export default class App extends Component {
 
   componentDidMount () {
     setupLayout(this.layout)
+    console.log('layout setup called')
   }
 
   render (props, state) {

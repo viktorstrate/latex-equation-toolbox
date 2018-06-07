@@ -49,45 +49,66 @@ const layoutConfig = {
       }]
     }, {
       type: 'column',
-      content: [{
-        type: 'stack',
-        content: [{
-          title: 'Preview',
-          type: 'react-component',
-          component: 'preview',
-          props: {
-            store
-          }
+      content: [
+        {
+          type: 'stack',
+          content: [
+            {
+              title: 'Preview',
+              type: 'react-component',
+              component: 'preview',
+              props: {
+                store
+              }
+            },
+            {
+              title: 'Equations',
+              type: 'react-component',
+              component: 'equations',
+              props: {
+                store
+              }
+            }]
         }, {
-          title: 'Equations',
+          title: 'Symbols',
           type: 'react-component',
-          component: 'equations',
-          props: {
-            store
-          }
+          component: 'symbols',
+          props: { store }
         }]
-      }, {
-        title: 'Symbols',
-        type: 'react-component',
-        component: 'symbols',
-        props: { store }
-      }]
     }]
   }]
 }
 
 export default (element) => {
+  console.log('View components loading')
   Promise.all(Object.values(viewComponents)).then(values => {
+    console.log('View components loaded')
     layout = new GoldenLayout(layoutConfig, element)
-    Object.keys(views).forEach(category => {
-      views[category].forEach(component => {
+    console.log('golden layout loaded')
+
+    for (let category of Object.keys(views)) {
+      for (let component of views[category]) {
+        console.log('item', category, component)
         const i = Object.values(viewComponents).indexOf(viewComponents[component[0]])
         const value = values[i]
+        console.log('here', value)
         layout.registerComponent(component[0], value.default || value)
-      })
-    })
+        console.log('item end', component)
+      }
+      console.log('Outside', category)
+    }
 
+    // Object.keys(views).forEach(category => {
+    //   views[category].forEach(component => {
+    //     const i = Object.values(viewComponents).indexOf(viewComponents[component[0]])
+    //     const value = values[i]
+    //     layout.registerComponent(component[0], value.default || value)
+    //   })
+    // })
+
+    console.log('Right before layout load')
     layout.init()
     store.dispatch(layoutActions.load())
+    console.log('Layout loaded')
   })
 }

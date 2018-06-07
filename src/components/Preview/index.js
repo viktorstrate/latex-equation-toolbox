@@ -16,6 +16,10 @@ export default class Preview extends Component {
     store: PropTypes.object
   }
 
+  constructor (props) {
+    super(props)
+  }
+
   render (props) {
     let mathEl = 'Empty math'
 

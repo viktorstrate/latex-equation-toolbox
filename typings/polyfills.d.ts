@@ -1,5 +1,5 @@
-declare namespace mathjs {
-  export interface IMathJsStatic {
+declare namespace math {
+  export interface MathJsStatic {
     simplify(expr: string|MathNode, rules?: any): MathNode
     simplify(expr: string|MathNode, rules?: any, scope?: any): MathNode
     simplify(expr: string|MathNode, scope?: any): MathNode

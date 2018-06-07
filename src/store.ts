@@ -8,7 +8,7 @@ const middleware: Middleware[] = []
 
 declare global {
   interface Window {
-    __REDUX_DEVTOOLS_EXTENSION__: string
+    __REDUX_DEVTOOLS_EXTENSION__()
   }
 }
 
@@ -30,5 +30,7 @@ const store = createStore(
   initialState,
   composedEnhancers
 )
+
+console.log('Store loaded')
 
 export default store
