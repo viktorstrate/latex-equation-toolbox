@@ -56,6 +56,14 @@ const layoutConfig = {
           type: 'stack',
           content: [
             {
+              title: 'Image Export',
+              type: 'react-component',
+              component: 'image-export',
+              props: {
+                store
+              }
+            },
+            {
               title: 'Preview',
               type: 'react-component',
               component: 'preview',

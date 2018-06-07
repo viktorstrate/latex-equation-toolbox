@@ -1,6 +1,15 @@
 let mj2img;
 
 window.MathJax = {
+  AuthorInit: function () {
+    console.log('Initialization')
+  }
+};
+
+let loadListeners = []
+
+// Thanks to Peter Krautzberger for his codepen https://codepen.io/pkra/details/PZLyQO
+window.MathJax = {
   jax: ["input/TeX", "output/SVG"],
   extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
   showMathMenu: false,
@@ -16,23 +25,23 @@ window.MathJax = {
     console.log('AuthorInit called')
     MathJax.Hub.Register.StartupHook("End", function () {
       console.log('Startup hook called')
-      mj2img = function (texstring, callback) {
-        console.log('texstring', texstring)
+      mj2img = function (latex, callback) {
+        let texstring = `\\[${latex}\\]`
+
         var input = texstring;
-        console.log('wrapper #1', wrapper)
-        console.log('test', document.createElement("div"))
+
         var wrapper = document.createElement("div");
-        console.log('wrapper', wrapper)
+
         wrapper.innerHTML = input;
-        console.log('wrapper', wrapper)
+
         var output = { svg: "", img: "" };
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, wrapper]);
         MathJax.Hub.Queue(function () {
-          console.log('wrapper', wrapper)
+
           var mjOut = wrapper.getElementsByTagName("svg")[0];
           mjOut.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 
-          // "22.676ex"
+          // Example "22.676ex"
           let widthStr = mjOut.getAttribute("width")
           let heightStr = mjOut.getAttribute("height")
 
@@ -47,7 +56,9 @@ window.MathJax = {
           // thanks, https://spin.atomicobject.com/2014/01/21/convert-svg-to-png/
           output.svg = mjOut.outerHTML;
           var image = new Image();
-          image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(output.svg)));
+          let svgData = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(output.svg)));
+          output.svgData = svgData
+          image.src = svgData
           image.onload = function () {
             var canvas = document.createElement('canvas');
             canvas.width = image.width;
@@ -59,6 +70,13 @@ window.MathJax = {
           };
         });
       }
+
+      for (let listener of loadListeners) {
+        listener(mj2img)
+      }
+
+      loadListeners = []
+
       // mj2img("\\[e=\\frac{mc^2}{2}\\]", function (output) {
       //   console.log('here', output)
       //   //document.getElementById("target").innerHTML = output.svg;
@@ -74,10 +92,20 @@ window.MathJax = {
   script.onload = function () {
     // remote script has loaded
   };
-  script.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js';
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js';
   d.getElementsByTagName('head')[0].appendChild(script);
 }(document));
 
+// export default () => {
+//   return mj2img
+// }
+
 export default () => {
-  return mj2img
+  return new Promise((resolve) => {
+    if (mj2img === undefined) {
+      loadListeners.push(resolve)
+    } else {
+      resolve(mj2img)
+    }
+  })
 }

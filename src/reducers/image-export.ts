@@ -16,7 +16,8 @@ const actionTypes = {
 
 interface ChangeImageAction extends Action {
   png: string,
-  svg: string
+  svg: string,
+  svgData: string
 }
 
 const reducer: Reducer<State> = (state = initialState, action) => {
@@ -24,7 +25,8 @@ const reducer: Reducer<State> = (state = initialState, action) => {
     case actionTypes.UPDATE_IMAGE:
       return {
         png: action.png,
-        svg: action.svg
+        svg: action.svg,
+        svgData: action.svgData
       }
     default:
       return state
@@ -34,9 +36,10 @@ const reducer: Reducer<State> = (state = initialState, action) => {
 export default reducer
 
 export const actions = {
-  updateImage: (png: string, svg: string): ChangeImageAction => ({
+  updateImage: (png: string, svg: string, svgData: string): ChangeImageAction => ({
     type: actionTypes.UPDATE_IMAGE,
     png,
-    svg
+    svg,
+    svgData
   })
 }
