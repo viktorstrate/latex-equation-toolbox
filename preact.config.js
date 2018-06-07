@@ -14,6 +14,12 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 export default function (config, env, helpers) {
   preactCliTypeScript(config)
 
+  // Disable uglify as it throws errors
+  // https://github.com/developit/preact-cli/issues/557
+  config.plugins = config.plugins.filter(plugin => {
+    return plugin.constructor.name !== 'UglifyJsPlugin'
+  })
+
   config.module.loaders.push({
     test: /\.(ttf|eot|woff|woff2|otf)$/,
     loader: 'file-loader',

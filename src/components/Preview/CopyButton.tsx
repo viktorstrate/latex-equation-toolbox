@@ -6,10 +6,12 @@ interface CopyButtonProps {
   name: string
 }
 
-const CopyButton = (props: CopyButtonProps) => (
-  <Clipboard data-clipboard-text={props.value}>
-    {props.name}
-  </Clipboard>
-)
+const CopyButton = function (props: CopyButtonProps) {
+  return (
+    <Clipboard data-clipboard-text={props.value}>
+      {props.name}
+    </Clipboard>
+  )
+}
 
 export default CopyButton
