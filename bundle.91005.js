@@ -5866,7 +5866,7 @@ function updateTheme(newDark) {
     var link = document.createElement('link');
     link.type = 'text/css';
     link.rel = 'stylesheet';
-    link.href = newDark ? '/style/goldenlayout-dark-theme.css' : '/style/goldenlayout-light-theme.css';
+    link.href = ( true ? '/latex-equation-toolbox' : '') + '/style/goldenlayout-' + (newDark ? 'dark' : 'light') + '-theme.css';
     link.id = 'layout-theme-style';
 
     var oldStyle = void 0;
@@ -19361,4 +19361,4 @@ module.exports = {"header":"header__g3rfq"};
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.1f6a0.js.map
+//# sourceMappingURL=bundle.91005.js.map
