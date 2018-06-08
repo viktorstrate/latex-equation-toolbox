@@ -99,7 +99,7 @@ function updateTheme(newDark) {
     let link = document.createElement('link')
     link.type = 'text/css'
     link.rel = 'stylesheet'
-    link.href = newDark ? '/style/goldenlayout-dark-theme.css' : '/style/goldenlayout-light-theme.css'
+    link.href = `${process.env.NODE_ENV === 'production' ? '/latex-equation-toolbox' : ''}/style/goldenlayout-${newDark ? 'dark' : 'light'}-theme.css`
     link.id = 'layout-theme-style'
 
     let oldStyle

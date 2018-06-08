@@ -1,5 +1,6 @@
 import preactCliTypeScript from 'preact-cli-plugin-typescript'
 import path from 'path'
+import webpack from 'webpack'
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
