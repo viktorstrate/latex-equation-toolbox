@@ -6,6 +6,7 @@ import input from './input'
 import symbols from './symbols'
 import calculations from './calculations'
 import imageExport from './image-export'
+import settings from './settings'
 
 export default combineReducers({
   general,
@@ -13,5 +14,6 @@ export default combineReducers({
   input,
   symbols,
   calculations,
-  imageExport
+  imageExport,
+  settings
 })

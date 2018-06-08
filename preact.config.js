@@ -2,6 +2,7 @@ import preactCliTypeScript from 'preact-cli-plugin-typescript'
 import path from 'path'
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 /**
 * Function that mutates original webpack config.
@@ -43,4 +44,5 @@ export default function (config, env, helpers) {
   }
 
   config.plugins.push(new HardSourceWebpackPlugin())
+  config.plugins.push(new CopyWebpackPlugin([{ context: `${__dirname}/src/public`, from: `**/*.*` }]))
 }

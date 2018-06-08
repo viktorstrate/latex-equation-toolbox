@@ -1,7 +1,6 @@
 // eslint-disable-next-line
 import GoldenLayout from 'imports-loader?ReactDOM=react-dom!imports-loader?React=react!golden-layout'
 import 'golden-layout/src/css/goldenlayout-base.css'
-import 'golden-layout/src/css/goldenlayout-dark-theme.css'
 
 import store from '../store'
 import { actions as layoutActions } from '../reducers/layout'
@@ -12,7 +11,8 @@ const viewComponents = {
   'symbols': import('./Symbols'),
   'preview': import('./Preview'),
   'equations': import('./Equations'),
-  'image-export': import('./ImageExport')
+  'image-export': import('./ImageExport'),
+  'settings': import('./Settings/Settings')
 }
 
 export let layout = null
@@ -25,7 +25,8 @@ export const views = {
   View: [
     ['preview', 'Preview'],
     ['equations', 'Equations'],
-    ['image-export', 'Image Export']
+    ['image-export', 'Image Export'],
+    ['settings', 'Settings']
   ]
 }
 
@@ -89,6 +90,51 @@ const layoutConfig = {
   }]
 }
 
+let darkTheme = undefined
+function updateTheme(newDark) {
+  if (darkTheme !== undefined || darkTheme !== newDark) {
+
+    console.log('Updating theme')
+
+    let link = document.createElement('link')
+    link.type = 'text/css'
+    link.rel = 'stylesheet'
+    link.href = newDark ? '/style/goldenlayout-dark-theme.css' : '/style/goldenlayout-light-theme.css'
+    link.id = 'layout-theme-style'
+
+    let oldStyle
+    if (oldStyle = document.getElementById('layout-theme-style')) {
+      oldStyle.remove()
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(link)
+
+  }
+}
+
+store.subscribe(() => {
+  const state = store.getState()
+  updateTheme(state.settings.darkTheme)
+})
+
+updateTheme(store.getState().settings.darkTheme)
+
+function updateWindowOnResize(layout) {
+  var resizeTimeout
+  function resizeThrottler() {
+    if (!resizeTimeout) {
+      resizeTimeout = setTimeout(function () {
+        resizeTimeout = null
+        console.log('Updating layout size')
+        layout.updateSize()
+      }, 20);
+    }
+  }
+
+  window.addEventListener("resize", resizeThrottler, false);
+
+}
+
 export default (element) => {
   Promise.all(Object.values(viewComponents)).then(values => {
     layout = new GoldenLayout(layoutConfig, element)
@@ -104,6 +150,9 @@ export default (element) => {
     }
 
     layout.init()
+
+    updateWindowOnResize(layout)
+
     store.dispatch(layoutActions.load())
 
   })
