@@ -4,7 +4,7 @@ webpackJsonp([5],{
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"mathBackground":"mathBackground__3DwWi","container":"container__drWZf","title":"title__2gSTX"};
+module.exports = {"mathBackground":"mathBackground__3DwWi","container":"container__drWZf","scrollBox":"scrollBox__3TPkK","title":"title__2gSTX"};
 
 /***/ }),
 
@@ -34,40 +34,51 @@ let ImageExport = class ImageExport extends __WEBPACK_IMPORTED_MODULE_0_preact__
     constructor() {
         super(...arguments);
         this.oldLatex = '';
+        this.newestPromise = undefined;
     }
     generatePNG() {
         if (this.props.latex === this.oldLatex) {
             return;
         }
-        console.log('Generate png');
         let dispatch = this.props.dispatch;
-        Object(__WEBPACK_IMPORTED_MODULE_2__mathjax_setup__["a" /* default */])().then(mj2img => {
-            console.log('mj2img', mj2img);
-            mj2img(this.props.latex, function (output) {
-                console.log('here', output);
-                dispatch(__WEBPACK_IMPORTED_MODULE_3__reducers_image_export__["a" /* actions */].updateImage(output.img, output.svg, output.svgData));
-                //document.getElementById("target").innerHTML = output.svg;
+        let localPromise = new Promise((resolve) => {
+            setTimeout(resolve, 400);
+        });
+        this.newestPromise = localPromise;
+        let self = this;
+        function updateMath() {
+            Object(__WEBPACK_IMPORTED_MODULE_2__mathjax_setup__["a" /* default */])().then(mj2img => {
+                mj2img(self.props.latex, function (output) {
+                    dispatch(__WEBPACK_IMPORTED_MODULE_3__reducers_image_export__["a" /* actions */].updateImage(output.img, output.svg, output.svgData));
+                    //document.getElementById("target").innerHTML = output.svg;
+                });
             });
+        }
+        localPromise.then(res => {
+            if (localPromise === self.newestPromise) {
+                updateMath();
+            }
         });
     }
     render(props) {
         this.generatePNG();
         let svgData = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(props.imageExport.svg)));
         this.oldLatex = this.props.latex;
-        return Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", { className: style.container },
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("h2", { className: style.title }, "Image export view"),
-            "You can drag and drop the images below, into other applications or a folder.",
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
-            "SVG",
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", { className: mathStyle.math },
-                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("img", { src: props.imageExport.svgData })),
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
-            "PNG",
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", { className: mathStyle.math },
-                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("img", { src: props.imageExport.png })));
+        return (Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", { className: style.scrollBox },
+            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", { className: style.container },
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("h2", { className: style.title }, "Image export view"),
+                "You can drag and drop the images below, into other applications or a folder.",
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
+                "SVG",
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", { className: mathStyle.math },
+                    Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("img", { src: props.imageExport.svgData })),
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
+                "PNG",
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("br", null),
+                Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", { className: mathStyle.math },
+                    Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("img", { src: props.imageExport.png })))));
     }
 };
 ImageExport = __decorate([
@@ -82,4 +93,4 @@ ImageExport = __decorate([
 /***/ })
 
 });
-//# sourceMappingURL=5.chunk.89781.js.map
+//# sourceMappingURL=5.chunk.ae1c6.js.map

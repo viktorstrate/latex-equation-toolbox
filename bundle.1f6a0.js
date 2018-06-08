@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		6: 0
+/******/ 		7: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk." + {"0":"9a28d","1":"e17c1","2":"ba80f","3":"9915c","4":"ffa9d","5":"89781"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk." + {"0":"b76a9","1":"2b1d0","2":"ba80f","3":"9915c","4":"ffa9d","5":"ae1c6","6":"a7d60"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -151,6 +151,37 @@
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "1ovv":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const initialState = {
+    darkTheme: true
+};
+const actionTypes = {
+    CHANGE_THEME: 'settings@changeTheme'
+};
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case actionTypes.CHANGE_THEME:
+            return Object.assign({}, state, { darkTheme: action.darkTheme });
+        default:
+            return state;
+    }
+};
+/* harmony default export */ __webpack_exports__["b"] = (reducer);
+const actions = {
+    changeTheme: (darkTheme) => ({
+        type: actionTypes.CHANGE_THEME,
+        darkTheme
+    })
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = actions;
+
+
 
 /***/ }),
 
@@ -311,13 +342,6 @@ if (false) {
   // http://fb.me/prop-types-in-prod
   module.exports = __webpack_require__("wVGV")();
 }
-
-/***/ }),
-
-/***/ "8IZ2":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -5706,7 +5730,11 @@ var calculations = __webpack_require__("8MyB");
 // EXTERNAL MODULE: ./reducers/image-export.ts
 var image_export = __webpack_require__("x4zy");
 
+// EXTERNAL MODULE: ./reducers/settings.ts
+var settings = __webpack_require__("1ovv");
+
 // CONCATENATED MODULE: ./reducers/index.ts
+
 
 
 
@@ -5720,7 +5748,8 @@ var image_export = __webpack_require__("x4zy");
     input: input["b" /* default */],
     symbols: symbols["b" /* default */],
     calculations: calculations["b" /* default */],
-    imageExport: image_export["b" /* default */]
+    imageExport: image_export["b" /* default */],
+    settings: settings["b" /* default */]
 }));
 
 // CONCATENATED MODULE: ./store.ts
@@ -5748,13 +5777,8 @@ var goldenlayout_default = /*#__PURE__*/__webpack_require__.n(goldenlayout);
 var goldenlayout_base = __webpack_require__("rDkK");
 var goldenlayout_base_default = /*#__PURE__*/__webpack_require__.n(goldenlayout_base);
 
-// EXTERNAL MODULE: ../node_modules/golden-layout/src/css/goldenlayout-dark-theme.css
-var goldenlayout_dark_theme = __webpack_require__("8IZ2");
-var goldenlayout_dark_theme_default = /*#__PURE__*/__webpack_require__.n(goldenlayout_dark_theme);
-
 // CONCATENATED MODULE: ./components/Layout.js
 // eslint-disable-next-line
-
 
 
 
@@ -5767,13 +5791,14 @@ var viewComponents = {
   'symbols': __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, "k1iF")),
   'preview': __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, "Pi+k")),
   'equations': __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, "SJMs")),
-  'image-export': __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "ll0S"))
+  'image-export': __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, "ll0S")),
+  'settings': __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, "115d"))
 };
 
 var Layout_layout = null;
 var views = {
   Editor: [['visual-input', 'Visual input'], ['code-input', 'Code input'], ['symbols', 'Symbols']],
-  View: [['preview', 'Preview'], ['equations', 'Equations'], ['image-export', 'Image Export']]
+  View: [['preview', 'Preview'], ['equations', 'Equations'], ['image-export', 'Image Export'], ['settings', 'Settings']]
 };
 
 var layoutConfig = {
@@ -5832,6 +5857,49 @@ var layoutConfig = {
   }]
 };
 
+var darkTheme = undefined;
+function updateTheme(newDark) {
+  if (darkTheme !== undefined || darkTheme !== newDark) {
+
+    console.log('Updating theme');
+
+    var link = document.createElement('link');
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.href = newDark ? '/style/goldenlayout-dark-theme.css' : '/style/goldenlayout-light-theme.css';
+    link.id = 'layout-theme-style';
+
+    var oldStyle = void 0;
+    if (oldStyle = document.getElementById('layout-theme-style')) {
+      oldStyle.remove();
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+}
+
+store_0.subscribe(function () {
+  var state = store_0.getState();
+  updateTheme(state.settings.darkTheme);
+});
+
+updateTheme(store_0.getState().settings.darkTheme);
+
+function updateWindowOnResize(layout) {
+  var resizeTimeout;
+  function resizeThrottler() {
+    if (!resizeTimeout) {
+      resizeTimeout = setTimeout(function () {
+        resizeTimeout = null;
+        console.log('Updating layout size');
+        layout.updateSize();
+      }, 20);
+    }
+  }
+
+  window.addEventListener("resize", resizeThrottler, false);
+}
+
 /* harmony default export */ var Layout = (function (element) {
   Promise.all(Object.values(viewComponents)).then(function (values) {
     Layout_layout = new goldenlayout_default.a(layoutConfig, element);
@@ -5873,6 +5941,9 @@ var layoutConfig = {
     }
 
     Layout_layout.init();
+
+    updateWindowOnResize(Layout_layout);
+
     store_0.dispatch(layout_actions.load());
   });
 });
@@ -6306,7 +6377,6 @@ window.MathJax = {
   AuthorInit: function AuthorInit() {
     console.log('AuthorInit called');
     MathJax.Hub.Register.StartupHook("End", function () {
-      console.log('Startup hook called');
       mj2img = function mj2img(latex, callback) {
         var texstring = "\\[" + latex + "\\]";
 
@@ -19291,4 +19361,4 @@ module.exports = {"header":"header__g3rfq"};
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.ee9b7.js.map
+//# sourceMappingURL=bundle.1f6a0.js.map

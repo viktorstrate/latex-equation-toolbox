@@ -1,4 +1,4 @@
-webpackJsonp([1],{
+webpackJsonp([0],{
 
 /***/ "+Icb":
 /***/ (function(module, exports, __webpack_require__) {
@@ -10371,6 +10371,7 @@ var MathField_MathField = function (_Component) {
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.oldLatex = '';
+    _this.newestPromise = undefined;
 
     _this.state = {
       svgData: ''
@@ -10378,36 +10379,53 @@ var MathField_MathField = function (_Component) {
     return _this;
   }
 
-  MathField.prototype.render = function render(props) {
+  MathField.prototype.updateMath = function updateMath() {
     var _this2 = this;
 
     var self = this;
-    if (props.latex !== this.oldLatex) {
-      this.oldLatex = props.latex;
-      // loadMj2img()(this.props.latex, (output) => {
-      //   console.log('Preview result', output)
-      //   // self.setState({
-      //   //   oldLatex: props.latex,
-      //   //   svgData: output.svgData
-      //   // })
-      // })
-      Object(mathjax_setup["a" /* default */])().then(function (mj2img) {
-        console.log('mj2img preview', mj2img);
-        mj2img(_this2.props.latex, function (output) {
-          console.log('here preview', output);
-          //dispatch(actions.updateImage(output.img, output.svg, output.svgData))
-          //document.getElementById("target").innerHTML = output.svg;
-          self.setState({
-            svgData: output.svgData
-          });
+    Object(mathjax_setup["a" /* default */])().then(function (mj2img) {
+      mj2img(_this2.props.latex, function (output) {
+        self.setState({
+          svgData: output.svgData
         });
       });
+    });
+  };
+
+  MathField.prototype.delayedUpdateMath = function delayedUpdateMath() {
+    var localPromise = new Promise(function (resolve) {
+      console.log('Waiting a sec to update');
+      setTimeout(resolve, 400);
+    });
+    this.newestPromise = localPromise;
+
+    var self = this;
+
+    localPromise.then(function (res) {
+      if (self.newestPromise === localPromise) {
+        self.updateMath();
+      } else {
+        console.log('A newer promise was found');
+      }
+    });
+  };
+
+  MathField.prototype.render = function render(props) {
+    var self = this;
+    if (props.latex !== this.oldLatex) {
+      this.oldLatex = props.latex;
+
+      this.delayedUpdateMath();
     }
 
     return Object(preact_min["h"])(
       'div',
       { className: style_default.a.mathfield },
-      Object(preact_min["h"])('img', { className: style_default.a.math, src: this.state.svgData }),
+      Object(preact_min["h"])(
+        'div',
+        { className: style_default.a.math },
+        Object(preact_min["h"])('img', { src: this.state.svgData })
+      ),
       Object(preact_min["h"])(
         'div',
         { className: style_default.a.center },
@@ -27809,6 +27827,224 @@ exports.factory = factory;
 
 /***/ }),
 
+/***/ "Pi+k":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+// EXTERNAL MODULE: ../node_modules/preact/dist/preact.min.js
+var preact_min = __webpack_require__("KM04");
+var preact_min_default = /*#__PURE__*/__webpack_require__.n(preact_min);
+
+// EXTERNAL MODULE: ../node_modules/react-redux/es/index.js + 23 modules
+var es = __webpack_require__("jYI/");
+
+// EXTERNAL MODULE: ../node_modules/prop-types/index.js
+var prop_types = __webpack_require__("5D9O");
+var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
+
+// EXTERNAL MODULE: ./components/Preview/MathField.js + 1 modules
+var MathField = __webpack_require__("7M8f");
+
+// EXTERNAL MODULE: ../node_modules/lodash/isEqual.js
+var isEqual = __webpack_require__("R6wa");
+var isEqual_default = /*#__PURE__*/__webpack_require__.n(isEqual);
+
+// EXTERNAL MODULE: ../node_modules/algebra-latex/lib/index.js
+var lib = __webpack_require__("DTZS");
+var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
+
+// EXTERNAL MODULE: ./reducers/calculations.ts
+var calculations = __webpack_require__("8MyB");
+
+// EXTERNAL MODULE: ./components/calculations.ts
+var components_calculations = __webpack_require__("PK23");
+
+// EXTERNAL MODULE: ./components/Preview/style.sass
+var style = __webpack_require__("PFev");
+var style_default = /*#__PURE__*/__webpack_require__.n(style);
+
+// CONCATENATED MODULE: ./components/Preview/Variables.js
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _dec, _class;
+
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+
+var _ref = Object(preact_min["h"])('br', null);
+
+var Variables_Variables = (_dec = Object(es["b" /* connect */])(function (store) {
+  return _extends({}, store.calculations, {
+    latex: store.input.latex
+  });
+}, calculations["a" /* actions */]), _dec(_class = function (_Component) {
+  _inherits(Variables, _Component);
+
+  function Variables() {
+    _classCallCheck(this, Variables);
+
+    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+  }
+
+  Variables.prototype.inputChanged = function inputChanged(event, variable) {
+    if (!isNaN(Number(event.target.value)) && event.target.value !== '') {
+      this.props.setVariable(variable, Number(event.target.value));
+    } else {
+      this.props.setVariable(variable, null);
+    }
+  };
+
+  Variables.prototype.render = function render(props) {
+    var solution = null;
+    var solutionEl = null;
+
+    var calculatedVariables = Object(components_calculations["a" /* getVariables */])(props.latex);
+    if (!isEqual_default()(Object.keys(props.variables), calculatedVariables)) {
+      props.changeVariables(calculatedVariables);
+    }
+
+    if (props.latex) {
+      try {
+        solution = Object(components_calculations["c" /* solveVariables */])(props.latex, props.variables);
+        solutionEl = Object(preact_min["h"])(MathField["a" /* default */], { latex: solution });
+      } catch (e) {
+        solution = e.message;
+        var asciiMath = new lib_default.a(props.latex).toMath();
+        solutionEl = Object(preact_min["h"])(
+          'div',
+          { className: style_default.a.center },
+          'Could not simplify math: ',
+          solution,
+          _ref,
+          Object(preact_min["h"])(
+            'i',
+            null,
+            asciiMath
+          )
+        );
+      }
+    }
+
+    var self = this;
+    var inputs = Object.keys(props.variables).map(function (v) {
+      return Object(preact_min["h"])(
+        'div',
+        { key: v },
+        v,
+        ':',
+        Object(preact_min["h"])('input', { value: props.variables[v], onChange: function onChange(x) {
+            self.inputChanged(x, v);
+          } })
+      );
+    });
+
+    return Object(preact_min["h"])(
+      'div',
+      null,
+      Object(preact_min["h"])(
+        'div',
+        { className: style_default.a.header },
+        'Simplified:'
+      ),
+      ' ',
+      solutionEl,
+      'Variables ',
+      inputs
+    );
+  };
+
+  return Variables;
+}(preact_min["Component"])) || _class);
+
+// CONCATENATED MODULE: ./components/Preview/index.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Preview_Preview; });
+var Preview__dec, Preview__class, _class2, _temp;
+
+
+
+function Preview__classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Preview__possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function Preview__inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+var Preview__ref = Object(preact_min["h"])('hr', null);
+
+var Preview_Preview = (Preview__dec = Object(es["b" /* connect */])(function (store) {
+  return {
+    latex: store.input.latex,
+    variables: store.calculations.variables
+  };
+}), Preview__dec(Preview__class = (_temp = _class2 = function (_Component) {
+  Preview__inherits(Preview, _Component);
+
+  function Preview(props) {
+    Preview__classCallCheck(this, Preview);
+
+    return Preview__possibleConstructorReturn(this, _Component.call(this, props));
+  }
+
+  Preview.prototype.render = function render(props) {
+    var mathEl = 'Empty math';
+
+    if (props.latex) {
+      mathEl = Object(preact_min["h"])(MathField["a" /* default */], { latex: props.latex });
+    }
+
+    return Object(preact_min["h"])(
+      'div',
+      { className: style_default.a.container },
+      Object(preact_min["h"])(
+        'div',
+        null,
+        Object(preact_min["h"])(
+          'div',
+          { className: style_default.a.header },
+          'Math:'
+        ),
+        ' ',
+        mathEl,
+        Preview__ref,
+        Object(preact_min["h"])(Variables_Variables, { store: props.store })
+      )
+    );
+  };
+
+  return Preview;
+}(preact_min["Component"]), _class2.contextTypes = {
+  store: prop_types_default.a.object
+}, _temp)) || Preview__class);
+
+
+/***/ }),
+
 /***/ "Pk8f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -30845,66 +31081,6 @@ function factory(type, config, load, typed) {
 
 exports.name = 'not';
 exports.factory = factory;
-
-/***/ }),
-
-/***/ "SJMs":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_preact__ = __webpack_require__("KM04");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_preact___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_preact__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__("jYI/");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__calculations__ = __webpack_require__("PK23");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Preview_MathField__ = __webpack_require__("7M8f");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__reducers_calculations__ = __webpack_require__("8MyB");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-const isEqual = __webpack_require__("R6wa");
-let Equations = class Equations extends __WEBPACK_IMPORTED_MODULE_0_preact__["Component"] {
-    constructor(props) {
-        super(props);
-        this.selectVariable = this.selectVariable.bind(this);
-    }
-    selectVariable(variable) {
-        this.props.solveVariable(variable);
-    }
-    render() {
-        const calculatedVariables = Object(__WEBPACK_IMPORTED_MODULE_2__calculations__["a" /* getVariables */])(this.props.latex);
-        if (!isEqual(Object.keys(this.props.variables), calculatedVariables)) {
-            this.props.changeVariables(calculatedVariables);
-        }
-        const variableButtons = Object.keys(this.props.variables).map(v => {
-            let style = null;
-            if (v === this.props.variable) {
-                style = {
-                    'background-color': 'red'
-                };
-            }
-            return Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("button", { key: v, style: style, onClick: x => { this.selectVariable(v); } }, v);
-        });
-        return (Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("div", null,
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])(__WEBPACK_IMPORTED_MODULE_3__Preview_MathField__["a" /* default */], { latex: Object(__WEBPACK_IMPORTED_MODULE_2__calculations__["b" /* solveVariable */])(this.props.latex, this.props.variable) }),
-            "Solve for variable",
-            Object(__WEBPACK_IMPORTED_MODULE_0_preact__["h"])("button", { onClick: x => { this.selectVariable(null); } }, "None"),
-            variableButtons));
-    }
-};
-Equations = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(store => (Object.assign({}, store.calculations, { latex: store.input.latex })), __WEBPACK_IMPORTED_MODULE_4__reducers_calculations__["a" /* actions */])
-], Equations);
-/* harmony default export */ __webpack_exports__["default"] = (Equations);
-
 
 /***/ }),
 
@@ -65666,4 +65842,4 @@ module.exports = {
 /***/ })
 
 });
-//# sourceMappingURL=1.chunk.e17c1.js.map
+//# sourceMappingURL=0.chunk.b76a9.js.map
