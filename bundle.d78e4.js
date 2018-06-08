@@ -5947,6 +5947,8 @@ function updateWindowOnResize(layout) {
     store_0.dispatch(layout_actions.load());
   });
 });
+
+console.log('Is it production?', "production");
 // EXTERNAL MODULE: ../node_modules/prop-types/index.js
 var prop_types = __webpack_require__("5D9O");
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
@@ -19361,4 +19363,4 @@ module.exports = {"header":"header__g3rfq"};
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.91005.js.map
+//# sourceMappingURL=bundle.d78e4.js.map
