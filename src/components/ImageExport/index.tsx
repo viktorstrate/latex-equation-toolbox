@@ -25,6 +25,7 @@ declare global {
 export default class ImageExport extends Component<PropsType, any> {
 
   oldLatex = ''
+  newestPromise = undefined
 
   generatePNG() {
 
@@ -32,37 +33,54 @@ export default class ImageExport extends Component<PropsType, any> {
       return
     }
 
-    console.log('Generate png')
-
     let dispatch = this.props.dispatch
 
-    loadMj2img().then(mj2img => {
-      console.log('mj2img', mj2img)
-      mj2img(this.props.latex, function(output){
-        console.log('here', output)
-        dispatch(actions.updateImage(output.img, output.svg, output.svgData))
-        //document.getElementById("target").innerHTML = output.svg;
-      })
+    let localPromise = new Promise((resolve) => {
+      setTimeout(resolve, 400)
     })
+    this.newestPromise = localPromise
+
+    let self = this
+
+    function updateMath() {
+      loadMj2img().then(mj2img => {
+        mj2img(self.props.latex, function (output) {
+          dispatch(actions.updateImage(output.img, output.svg, output.svgData))
+          //document.getElementById("target").innerHTML = output.svg;
+        })
+      })
+    }
+
+    localPromise.then(res => {
+      if (localPromise === self.newestPromise) {
+        updateMath()
+      }
+    })
+
+
   }
 
-  render (props) {
+  render(props) {
     this.generatePNG()
 
     let svgData = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(props.imageExport.svg)))
 
     this.oldLatex = this.props.latex
-    return <div className={style.container}>
-      <h2 className={style.title}>Image export view</h2>
-      You can drag and drop the images below, into other applications or a folder.<br/><br/>
-      SVG<br/>
-      <div className={mathStyle.math}>
-        <img src={props.imageExport.svgData} />
-      </div><br/>
-      PNG<br/>
-      <div className={mathStyle.math}>
-        <img src={props.imageExport.png} />
+    return (
+      <div className={style.scrollBox}>
+        <div className={style.container}>
+          <h2 className={style.title}>Image export view</h2>
+          You can drag and drop the images below, into other applications or a folder.<br /><br />
+          SVG<br />
+          <div className={mathStyle.math}>
+            <img src={props.imageExport.svgData} />
+          </div><br />
+          PNG<br />
+          <div className={mathStyle.math}>
+            <img src={props.imageExport.png} />
+          </div>
+        </div>
       </div>
-    </div>
+    )
   }
 }

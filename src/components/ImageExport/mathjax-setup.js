@@ -24,7 +24,6 @@ window.MathJax = {
   AuthorInit: function () {
     console.log('AuthorInit called')
     MathJax.Hub.Register.StartupHook("End", function () {
-      console.log('Startup hook called')
       mj2img = function (latex, callback) {
         let texstring = `\\[${latex}\\]`
 

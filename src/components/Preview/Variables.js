@@ -40,7 +40,7 @@ export default class Variables extends Component {
         const asciiMath = new AlgebraLatex(props.latex).toMath()
         solutionEl = (
           <div className={style.center}>
-            Error: {solution}<br />
+            Could not simplify math: {solution}<br />
             <i>{asciiMath}</i>
           </div>)
       }
