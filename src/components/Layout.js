@@ -90,9 +90,9 @@ const layoutConfig = {
   }]
 }
 
-let darkTheme = undefined
+let prevTheme = undefined
 function updateTheme(newDark) {
-  if (darkTheme !== undefined || darkTheme !== newDark) {
+  if (prevTheme !== newDark) {
 
     console.log('Updating theme')
 
@@ -108,6 +108,8 @@ function updateTheme(newDark) {
     }
 
     document.getElementsByTagName('head')[0].appendChild(link)
+
+    prevTheme = newDark
 
   }
 }

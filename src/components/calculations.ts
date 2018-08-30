@@ -49,22 +49,27 @@ export const solveVariable = (latex:string, variable:string):string => {
   let parsedMath = null
 
   try {
-    parsedMath = new AlgebraLatex(latex)
-    parsedMath = parsedMath.toMath()
-    parsedMath = CQ(parsedMath)
+    parsedMath = new AlgebraLatex(latex).toCoffeequate(CQ)
+    console.log('parsedMath', parsedMath)
   } catch (e) {
+    console.log('Could not parse for solve variable:', e)
     return latex
   }
 
   try {
-    return parsedMath.solve(variable).reduce((prev, curr) => {
+
+    const solved = parsedMath.solve(variable)
+    console.log('solved', solved)
+
+    return solved.reduce((prev, curr) => {
       if (prev === null) {
-        return curr
+        return curr.toLaTeX()
       } else {
-        return prev + '\\vee ' + curr
+        return prev + '\\vee ' + curr.toLaTeX()
       }
-    }, null).toLaTeX()
+    }, null)
   } catch (e) {
+    console.log('Could not solve variable:', e)
     return latex
   }
 }
