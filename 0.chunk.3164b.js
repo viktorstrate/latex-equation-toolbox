@@ -27604,24 +27604,27 @@ const solveVariable = (latex, variable) => {
     }
     let parsedMath = null;
     try {
-        parsedMath = new __WEBPACK_IMPORTED_MODULE_0_algebra_latex___default.a(latex);
-        parsedMath = parsedMath.toMath();
-        parsedMath = __WEBPACK_IMPORTED_MODULE_1_coffeequate___default()(parsedMath);
+        parsedMath = new __WEBPACK_IMPORTED_MODULE_0_algebra_latex___default.a(latex).toCoffeequate(__WEBPACK_IMPORTED_MODULE_1_coffeequate___default.a);
+        console.log('parsedMath', parsedMath);
     }
     catch (e) {
+        console.log('Could not parse for solve variable:', e);
         return latex;
     }
     try {
-        return parsedMath.solve(variable).reduce((prev, curr) => {
+        const solved = parsedMath.solve(variable);
+        console.log('solved', solved);
+        return solved.reduce((prev, curr) => {
             if (prev === null) {
-                return curr;
+                return curr.toLaTeX();
             }
             else {
-                return prev + '\\vee ' + curr;
+                return prev + '\\vee ' + curr.toLaTeX();
             }
-        }, null).toLaTeX();
+        }, null);
     }
     catch (e) {
+        console.log('Could not solve variable:', e);
         return latex;
     }
 };
@@ -65842,4 +65845,4 @@ module.exports = {
 /***/ })
 
 });
-//# sourceMappingURL=0.chunk.b76a9.js.map
+//# sourceMappingURL=0.chunk.3164b.js.map

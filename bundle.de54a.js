@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk." + {"0":"b76a9","1":"2b1d0","2":"ba80f","3":"9915c","4":"ffa9d","5":"ae1c6","6":"a7d60"}[chunkId] + ".js";
+/******/ 		script.src = __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk." + {"0":"3164b","1":"895a0","2":"ba80f","3":"9915c","4":"ffa9d","5":"ae1c6","6":"a7d60"}[chunkId] + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -5857,9 +5857,9 @@ var layoutConfig = {
   }]
 };
 
-var darkTheme = undefined;
+var prevTheme = undefined;
 function updateTheme(newDark) {
-  if (darkTheme !== undefined || darkTheme !== newDark) {
+  if (prevTheme !== newDark) {
 
     console.log('Updating theme');
 
@@ -5875,6 +5875,8 @@ function updateTheme(newDark) {
     }
 
     document.getElementsByTagName('head')[0].appendChild(link);
+
+    prevTheme = newDark;
   }
 }
 
@@ -19361,4 +19363,4 @@ module.exports = {"header":"header__g3rfq"};
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.91005.js.map
+//# sourceMappingURL=bundle.de54a.js.map
