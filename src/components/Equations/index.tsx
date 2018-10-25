@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import { getVariables, solveVariable } from '../calculations'
 import MathField from '../Preview/MathField'
@@ -8,27 +8,22 @@ import { actions, CalculationState } from '../../reducers/calculations'
 const isEqual = require('lodash/isEqual')
 
 interface PropsType extends CalculationState {
-  latex: string,
-  solveVariable(variable: string): void,
+  latex: string
+  solveVariable(variable: string): void
   changeVariables(variables: string[]): void
 }
 
-@connect(store => ({
-  ...store.calculations,
-  latex: store.input.latex
-}), actions)
-export default class Equations extends Component<PropsType, any> {
-
-  constructor (props) {
+class Equations extends React.Component<PropsType, any> {
+  constructor(props) {
     super(props)
     this.selectVariable = this.selectVariable.bind(this)
   }
 
-  selectVariable (variable: string) {
+  selectVariable(variable: string) {
     this.props.solveVariable(variable)
   }
 
-  render () {
+  render() {
     const calculatedVariables = getVariables(this.props.latex)
     if (!isEqual(Object.keys(this.props.variables), calculatedVariables)) {
       this.props.changeVariables(calculatedVariables)
@@ -38,19 +33,45 @@ export default class Equations extends Component<PropsType, any> {
       let style = null
       if (v === this.props.variable) {
         style = {
-          'background-color': 'red'
+          'background-color': 'red',
         }
       }
-      return <button key={v} style={style} onClick={x => { this.selectVariable(v) }} >{v}</button>
+      return (
+        <button
+          key={v}
+          style={style}
+          onClick={x => {
+            this.selectVariable(v)
+          }}
+        >
+          {v}
+        </button>
+      )
     })
 
     return (
       <div>
-        <MathField latex={solveVariable(this.props.latex, this.props.variable)} />
+        <MathField
+          latex={solveVariable(this.props.latex, this.props.variable)}
+        />
         Solve for variable
-        <button onClick={x => { this.selectVariable(null) }} >None</button>
+        <button
+          onClick={x => {
+            this.selectVariable(null)
+          }}
+        >
+          None
+        </button>
         {variableButtons}
       </div>
     )
   }
 }
+
+export default connect(
+  store => ({
+    ...store.calculations,
+    latex: store.input.latex,
+  }),
+  actions
+)(Equations)

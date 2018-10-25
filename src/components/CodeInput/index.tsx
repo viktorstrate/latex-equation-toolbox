@@ -1,6 +1,6 @@
-import { h, Component } from 'preact'
+import * as React from 'react'
 import { connect } from 'react-redux'
-import CodeMirror from 'react-codemirror'
+import {Controlled as CodeMirror} from 'react-codemirror2'
 
 import { actions } from '../../reducers/input'
 
@@ -12,6 +12,7 @@ const style = require('./style.sass')
 
 interface PropsType {
   latex:string,
+  darkTheme: boolean,
   changeLatex(value:string):void
 }
 
@@ -23,7 +24,7 @@ interface StateType {
   latex: state.input.latex,
   darkTheme: state.general.darkTheme
 }), actions)
-class CodeInput extends Component<PropsType, StateType> {
+class CodeInput extends React.Component<PropsType, StateType> {
   codeMirrorElm:any
 
   constructor (props) {
@@ -33,10 +34,12 @@ class CodeInput extends Component<PropsType, StateType> {
     this.codeMirrorElm = null
   }
 
-  onInputChange (value) {
+  onInputChange (editor, data, value) {
     this.props.changeLatex(value)
   }
-  render (props) {
+  render () {
+    let props = this.props
+
     if (this.codeMirrorElm !== null &&
       this.codeMirrorElm.codeMirror.getValue() !== props.latex) {
       const codeMirror = this.codeMirrorElm.codeMirror
@@ -46,14 +49,14 @@ class CodeInput extends Component<PropsType, StateType> {
 
     return (
       <CodeMirror
-        mode='stex'
         options={{
           theme: props.darkTheme ? 'monokai' : 'default'
         }}
         ref={el => { this.codeMirrorElm = el }}
         className={style.codeInput}
         value={this.props.latex}
-        onChange={this.onInputChange} />
+        onBeforeChange={this.onInputChange}
+        onChange={() => {}} />
     )
   }
 }

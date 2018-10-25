@@ -1,14 +1,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2017",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "es6",
+    "module": "commonjs",
     "sourceMap": true,
     "jsx": "react",
-    "jsxFactory": "h",
     "allowJs": true,
-    "experimentalDecorators": true,
-    "typeRoots" : ["./typings", "./node_modules/@types/"]
+    "typeRoots": ["./typings", "./node_modules/@types/"]
   }
 }

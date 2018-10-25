@@ -7,20 +7,16 @@ import Variables from './Variables'
 
 import style from './style.sass'
 
-@connect(store => ({
-  latex: store.input.latex,
-  variables: store.calculations.variables
-}))
-export default class Preview extends Component {
+class Preview extends Component {
   static contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
 
-  render (props) {
+  render(props) {
     let mathEl = 'Empty math'
 
     if (props.latex) {
@@ -38,3 +34,8 @@ export default class Preview extends Component {
     )
   }
 }
+
+export default connect(store => ({
+  latex: store.input.latex,
+  variables: store.calculations.variables,
+}))(Preview)

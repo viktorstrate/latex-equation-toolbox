@@ -8,85 +8,76 @@ import style from './style.sass'
 
 const changeLatex = inputActions.changeLatex
 
-@connect(state => ({
-  ...state.symbols,
-  latex: state.input.latex
-}), {
-  ...actions,
-  changeLatex
-})
 class Symbols extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.toggleTab = this.toggleTab.bind(this)
     this.insertSymbol = this.insertSymbol.bind(this)
   }
 
-  loadCategory (name) {
+  loadCategory(name) {
     const data = require('./signs/' + name + '/data.json')
 
     const visibleStyle = {
-      display: 'inline'
+      display: 'inline',
     }
 
     const self = this
 
     let elements = data.map(item => {
       const icon = require('./signs/' + name + '/' + item.icon)
-      return <div
-        style={self.props.visibleTabs[name] ? visibleStyle : null}
-        className={classnames(style['item'])}
-        key={item.code}
-        onClick={this.insertSymbol.bind(null, item.code)}>
-        <img src={icon} />
-      </div>
+      return (
+        <div
+          style={self.props.visibleTabs[name] ? visibleStyle : null}
+          className={classnames(style['item'])}
+          key={item.code}
+          onClick={this.insertSymbol.bind(null, item.code)}
+        >
+          <img src={icon} />
+        </div>
+      )
     })
 
-    return (
-      <div>
-        {elements}
-      </div>
-    )
+    return <div>{elements}</div>
   }
 
-  loadCategories () {
+  loadCategories() {
     const categories = require('./signs/categories.json')
 
     let elements = categories.map(category => (
       <div>
-        <div
-          className={style.category}
-          onClick={this.toggleTab} >
+        <div className={style.category} onClick={this.toggleTab}>
           {category}
         </div>
         {this.loadCategory(category)}
       </div>
     ))
 
-    return (
-      <div>
-        {elements}
-      </div>
-    )
+    return <div>{elements}</div>
   }
 
-  insertSymbol (symbol) {
+  insertSymbol(symbol) {
     this.props.changeLatex(this.props.latex + symbol)
   }
 
-  toggleTab (category) {
+  toggleTab(category) {
     console.log('Changing tab', category.target.innerText)
     this.props.toggleTab(category.target.innerText)
   }
 
-  render () {
-    return (
-      <div className={style.container}>
-        {this.loadCategories()}
-      </div>
-    )
+  render() {
+    return <div className={style.container}>{this.loadCategories()}</div>
   }
 }
 
-export default Symbols
+export default connect(
+  state => ({
+    ...state.symbols,
+    latex: state.input.latex,
+  }),
+  {
+    ...actions,
+    changeLatex,
+  }
+)(Symbols)

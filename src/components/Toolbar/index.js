@@ -1,24 +1,21 @@
-import { h, Component } from 'preact'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import style from './style.sass'
 import { views, layout } from '../Layout'
 
-@connect(state => ({
-  layoutLoaded: state.layout.loaded
-}))
-export default class Toolbar extends Component {
-  constructor (props) {
+class Toolbar extends React.Component {
+  constructor(props) {
     super(props)
     this.registerDragSource = this.registerDragSource.bind(this)
   }
 
   static contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
   }
 
-  registerDragSource (element, component) {
+  registerDragSource(element, component) {
     if (this.props.layoutLoaded) {
       console.log('Add layout loaded')
       layout.createDragSource(element, {
@@ -26,34 +23,42 @@ export default class Toolbar extends Component {
         type: 'react-component',
         component: component[0],
         props: {
-          store: this.context.store
-        }
+          store: this.context.store,
+        },
       })
     }
   }
 
-  render (props) {
+  render(props) {
     const self = this
     const viewElements = Object.keys(views).map(category => {
       const elements = views[category].map(component => {
-        const element = <div ref={el => {
-          self.registerDragSource(el, component)
-        }} className={style.component} key={component[0]}>{component[1]}</div>
+        const element = (
+          <div
+            ref={el => {
+              self.registerDragSource(el, component)
+            }}
+            className={style.component}
+            key={component[0]}
+          >
+            {component[1]}
+          </div>
+        )
 
         return element
       })
 
       return (
-        <div className={style.category}>
+        <div className={style.category} key={category}>
           {category}
           {elements}
         </div>
       )
     })
-    return (
-      <div className={style.header}>
-        { viewElements }
-      </div>
-    )
+    return <div className={style.header}>{viewElements}</div>
   }
 }
+
+export default connect(state => ({
+  layoutLoaded: state.layout.loaded,
+}))(Toolbar)

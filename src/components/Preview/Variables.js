@@ -9,12 +9,8 @@ import style from './style.sass'
 
 import MathField from './MathField'
 
-@connect(store => ({
-  ...store.calculations,
-  latex: store.input.latex
-}), actions)
-export default class Variables extends Component {
-  inputChanged (event, variable) {
+class Variables extends Component {
+  inputChanged(event, variable) {
     if (!isNaN(Number(event.target.value)) && event.target.value !== '') {
       this.props.setVariable(variable, Number(event.target.value))
     } else {
@@ -22,7 +18,7 @@ export default class Variables extends Component {
     }
   }
 
-  render (props) {
+  render(props) {
     let solution = null
     let solutionEl = null
 
@@ -40,20 +36,26 @@ export default class Variables extends Component {
         const asciiMath = new AlgebraLatex(props.latex).toMath()
         solutionEl = (
           <div className={style.center}>
-            Could not simplify math: {solution}<br />
+            Could not simplify math: {solution}
+            <br />
             <i>{asciiMath}</i>
-          </div>)
+          </div>
+        )
       }
     }
 
     const self = this
-    const inputs = Object.keys(props.variables)
-      .map(v => (
-        <div key={v}>
-          {v}:
-          <input value={props.variables[v]} onChange={(x) => { self.inputChanged(x, v) }} />
-        </div>
-      ))
+    const inputs = Object.keys(props.variables).map(v => (
+      <div key={v}>
+        {v}:
+        <input
+          value={props.variables[v]}
+          onChange={x => {
+            self.inputChanged(x, v)
+          }}
+        />
+      </div>
+    ))
 
     return (
       <div>
@@ -63,3 +65,11 @@ export default class Variables extends Component {
     )
   }
 }
+
+export default connect(
+  store => ({
+    ...store.calculations,
+    latex: store.input.latex,
+  }),
+  actions
+)(Variables)
