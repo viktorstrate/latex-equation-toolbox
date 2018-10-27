@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import * as React from 'react'
 import { connect } from 'react-redux'
 import isEqual from 'lodash/isEqual'
 import AlgebraLatex from 'algebra-latex'

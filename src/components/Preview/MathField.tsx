@@ -1,12 +1,21 @@
-import React from 'react'
+import * as React from 'react'
 //import { Context, Node } from 'react-mathjax'
+import * as MathStyle from './styles'
 import CopyButton from './CopyButton'
 import AlgebraLatex from 'algebra-latex'
 
-import style from './style.sass'
+// import style from './style.sass'
 import loadMj2img from '../ImageExport/mathjax-setup'
 
-export default class MathField extends React.Component {
+interface Props {
+  latex: string
+}
+
+interface State {
+  svgData: string
+}
+
+export default class MathField extends React.Component<Props, State> {
   oldLatex = ''
   newestPromise = undefined
 
@@ -46,25 +55,28 @@ export default class MathField extends React.Component {
     })
   }
 
-  render(props) {
+  render() {
     let self = this
-    if (props.latex !== this.oldLatex) {
-      this.oldLatex = props.latex
+    if (this.props.latex !== this.oldLatex) {
+      this.oldLatex = this.props.latex
 
       this.delayedUpdateMath()
     }
 
     return (
-      <div className={style.mathfield}>
-        <div className={style.math}>{<img src={this.state.svgData} />}</div>
-        <div className={style.center}>
-          <CopyButton value={props.latex} name="Copy as latex" />
+      <MathStyle.MathFieldDiv>
+        <MathStyle.MathJaxStyle />
+        <MathStyle.ImageWrapper>
+          {<img src={this.state.svgData} />}
+        </MathStyle.ImageWrapper>
+        <MathStyle.CenterDiv>
+          <CopyButton value={this.props.latex} name="Copy as latex" />
           <CopyButton
-            value={new AlgebraLatex(props.latex).toMath()}
+            value={new AlgebraLatex(this.props.latex).toMath()}
             name="Copy as text"
           />
-        </div>
-      </div>
+        </MathStyle.CenterDiv>
+      </MathStyle.MathFieldDiv>
     )
   }
 }

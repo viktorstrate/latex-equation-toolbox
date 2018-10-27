@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import {Controlled as CodeMirror} from 'react-codemirror2'
+import { Controlled as CodeMirror } from 'react-codemirror2'
+import styled from 'styled-components'
 
 import { actions } from '../../reducers/input'
 
@@ -8,57 +9,64 @@ require('codemirror/lib/codemirror.css')
 require('codemirror/mode/stex/stex')
 require('codemirror/theme/monokai.css')
 
-const style = require('./style.sass')
+const CodeMirrorStyled = styled(CodeMirror)`
+  height: 100vh;
+  background-color: #222 !important;
+`
 
 interface PropsType {
-  latex:string,
-  darkTheme: boolean,
-  changeLatex(value:string):void
+  latex: string
+  darkTheme: boolean
+  changeLatex(value: string): void
 }
 
-interface StateType {
+interface StateType {}
 
-}
-
-@connect(state => ({
-  latex: state.input.latex,
-  darkTheme: state.general.darkTheme
-}), actions)
 class CodeInput extends React.Component<PropsType, StateType> {
-  codeMirrorElm:any
+  codeMirrorElm: any
 
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.onInputChange = this.onInputChange.bind(this)
     this.codeMirrorElm = null
   }
 
-  onInputChange (editor, data, value) {
+  onInputChange(editor, data, value) {
     this.props.changeLatex(value)
   }
-  render () {
+  render() {
     let props = this.props
 
-    if (this.codeMirrorElm !== null &&
-      this.codeMirrorElm.codeMirror.getValue() !== props.latex) {
+    if (
+      this.codeMirrorElm !== null &&
+      this.codeMirrorElm.codeMirror.getValue() !== props.latex
+    ) {
       const codeMirror = this.codeMirrorElm.codeMirror
       codeMirror.setValue(props.latex)
       codeMirror.setCursor(codeMirror.lineCount(), 0)
     }
 
     return (
-      <CodeMirror
+      <CodeMirrorStyled
         options={{
-          theme: props.darkTheme ? 'monokai' : 'default'
+          theme: props.darkTheme ? 'monokai' : 'default',
         }}
-        ref={el => { this.codeMirrorElm = el }}
-        className={style.codeInput}
+        ref={el => {
+          this.codeMirrorElm = el
+        }}
         value={this.props.latex}
         onBeforeChange={this.onInputChange}
-        onChange={() => {}} />
+        onChange={() => {}}
+      />
     )
   }
 }
 
-export default CodeInput
+export default connect(
+  state => ({
+    latex: state.input.latex,
+    darkTheme: state.general.darkTheme,
+  }),
+  actions
+)(CodeInput)

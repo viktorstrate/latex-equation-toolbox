@@ -1,17 +1,17 @@
 export interface CalculationState {
-  variables: any,
+  variables: any
   variable?: string
 }
 
 const initialState: CalculationState = {
   variables: {},
-  variable: null
+  variable: null,
 }
 
 const actionTypes = {
   CHANGE_VARIABLES: 'calculations@changeVariables',
   SET_VARIABLE: 'calculations@setVariable',
-  SOLVE_VARIABLE: 'calculations@solveVariable'
+  SOLVE_VARIABLE: 'calculations@solveVariable',
 }
 
 export default (state: CalculationState = initialState, action) => {
@@ -27,7 +27,7 @@ export default (state: CalculationState = initialState, action) => {
       })
       return {
         ...state,
-        variables: newVars
+        variables: newVars,
       }
     case actionTypes.SET_VARIABLE:
       let variable = state.variable
@@ -39,13 +39,13 @@ export default (state: CalculationState = initialState, action) => {
         variables: {
           ...state.variables,
           [action.variable]: action.value,
-          variable
-        }
+          variable,
+        },
       }
     case actionTypes.SOLVE_VARIABLE:
       return {
         ...state,
-        variable: action.variable
+        variable: action.variable,
       }
     default:
       return state
@@ -55,15 +55,15 @@ export default (state: CalculationState = initialState, action) => {
 export const actions = {
   changeVariables: (variables: string[]) => ({
     type: actionTypes.CHANGE_VARIABLES,
-    variables
+    variables,
   }),
   setVariable: (variable: string, value: string) => ({
     type: actionTypes.SET_VARIABLE,
     variable,
-    value
+    value,
   }),
   solveVariable: (variable: string) => ({
     type: actionTypes.SOLVE_VARIABLE,
-    variable
-  })
+    variable,
+  }),
 }

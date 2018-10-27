@@ -6,6 +6,7 @@
     "sourceMap": true,
     "jsx": "react",
     "allowJs": true,
-    "typeRoots": ["./typings", "./node_modules/@types/"]
+    "typeRoots": ["./typings", "./node_modules/@types/"],
+    "lib": ["dom", "es7"]
   }
 }

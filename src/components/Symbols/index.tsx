@@ -1,14 +1,52 @@
-import { h, Component } from 'preact'
+import * as React from 'react'
 import { connect } from 'react-redux'
-import classnames from 'classnames'
+import styled from 'styled-components'
 
 import { actions } from '../../reducers/symbols'
 import { actions as inputActions } from '../../reducers/input'
-import style from './style.sass'
+// import style from './style.sass'
 
 const changeLatex = inputActions.changeLatex
 
-class Symbols extends Component {
+interface ItemDivProps {
+  show: boolean
+}
+
+const ItemDiv = styled.div<ItemDivProps>`
+  display: ${props => (props.show ? 'inline' : 'none')};
+`
+
+const Category = styled.div`
+  background-color: #333;
+  margin: 4px 0;
+  padding: 4px;
+  cursor: pointer;
+  user-select: none;
+`
+
+const Container = styled.div`
+  overflow: scroll;
+  height: 100%;
+`
+
+enum Sign {
+  arrows,
+  greek,
+}
+
+interface SignItem {
+  code: string
+  icon: string
+}
+
+interface Props {
+  latex: string
+  visibleTabs: Sign[]
+  changeLatex(string)
+  toggleTab(string)
+}
+
+class Symbols extends React.Component<Props> {
   constructor(props) {
     super(props)
 
@@ -16,8 +54,9 @@ class Symbols extends Component {
     this.insertSymbol = this.insertSymbol.bind(this)
   }
 
-  loadCategory(name) {
-    const data = require('./signs/' + name + '/data.json')
+  loadCategory(sign: Sign) {
+    const signName = Sign[sign]
+    const data = require('./signs/' + signName + '/data.json')
 
     const visibleStyle = {
       display: 'inline',
@@ -25,17 +64,16 @@ class Symbols extends Component {
 
     const self = this
 
-    let elements = data.map(item => {
-      const icon = require('./signs/' + name + '/' + item.icon)
+    let elements = data.map((item: SignItem) => {
+      const icon = require('./signs/' + signName + '/' + item.icon)
       return (
-        <div
-          style={self.props.visibleTabs[name] ? visibleStyle : null}
-          className={classnames(style['item'])}
+        <ItemDiv
+          show={self.props.visibleTabs.includes(sign)}
           key={item.code}
           onClick={this.insertSymbol.bind(null, item.code)}
         >
           <img src={icon} />
-        </div>
+        </ItemDiv>
       )
     })
 
@@ -47,9 +85,7 @@ class Symbols extends Component {
 
     let elements = categories.map(category => (
       <div>
-        <div className={style.category} onClick={this.toggleTab}>
-          {category}
-        </div>
+        <Category onClick={this.toggleTab}>{category}</Category>
         {this.loadCategory(category)}
       </div>
     ))
@@ -67,7 +103,7 @@ class Symbols extends Component {
   }
 
   render() {
-    return <div className={style.container}>{this.loadCategories()}</div>
+    return <Container>{this.loadCategories()}</Container>
   }
 }
 

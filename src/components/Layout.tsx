@@ -1,7 +1,11 @@
-// eslint-disable-next-line
-//import GoldenLayout from 'imports-loader?ReactDOM=react-dom!imports-loader?React=react!golden-layout'
-import * as GoldenLayout from 'golden-layout'
+// imports-loader?ReactDOM=react-dom!imports-loader?React=react!
+// import GoldenLayout from 'golden-layout'
+// import * as GoldenLayout from 'golden-layout'
+import * as React from 'react'
+import * as jquery from 'jquery'
 import 'golden-layout/src/css/goldenlayout-base.css'
+
+var GoldenLayout = require('golden-layout')({ react: React, jquery: jquery })
 
 import store from '../store'
 import { actions as layoutActions } from '../reducers/layout'
@@ -149,14 +153,16 @@ function updateWindowOnResize(layout) {
 }
 
 export default element => {
-  Promise.all(Object.values(viewComponents)).then(values => {
+  const viewComponentModules = Object.keys(viewComponents).map(
+    key => viewComponents[key]
+  )
+
+  Promise.all(viewComponentModules).then(values => {
     layout = new GoldenLayout(layoutConfig, element)
 
     for (let category of Object.keys(views)) {
       for (let component of views[category]) {
-        const i = Object.values(viewComponents).indexOf(
-          viewComponents[component[0]]
-        )
+        const i = viewComponentModules.indexOf(viewComponents[component[0]])
         const value = values[i]
 
         layout.registerComponent(component[0], value.default || value)

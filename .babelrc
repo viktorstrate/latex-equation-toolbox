@@ -1,20 +1,4 @@
 {
   "presets": ["@babel/preset-env", "@babel/react"],
-  "plugins": [
-    "transform-class-properties",
-    "babel-plugin-styled-components",
-    [
-      "auto-import",
-      {
-        "declarations": [
-          {
-            "React": "react",
-            "ReactDOM": "react-dom",
-            "$": "jquery",
-            "jQuery": "jquery"
-          }
-        ]
-      }
-    ]
-  ]
+  "plugins": ["transform-class-properties", "babel-plugin-styled-components"]
 }
