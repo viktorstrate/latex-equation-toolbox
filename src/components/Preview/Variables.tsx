@@ -1,15 +1,24 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import isEqual from 'lodash/isEqual'
-import AlgebraLatex from 'algebra-latex'
+import { isEqual } from 'lodash'
+// import AlgebraLatex from 'algebra-latex'
+const AlgebraLatex = require('algebra-latex')
 import { actions } from '../../reducers/calculations'
 import { getVariables, solveVariables } from '../calculations'
 
-import style from './style.sass'
+// import style from './style.sass'
+import * as Styles from './styles'
 
 import MathField from './MathField'
 
-class Variables extends Component {
+interface Props {
+  latex: string
+  changeVariables(variables: string[])
+  variables: string[]
+  setVariable(name: string, value: number | null)
+}
+
+class Variables extends React.Component<Props> {
   inputChanged(event, variable) {
     if (!isNaN(Number(event.target.value)) && event.target.value !== '') {
       this.props.setVariable(variable, Number(event.target.value))
@@ -18,38 +27,38 @@ class Variables extends Component {
     }
   }
 
-  render(props) {
+  render() {
     let solution = null
     let solutionEl = null
 
-    const calculatedVariables = getVariables(props.latex)
-    if (!isEqual(Object.keys(props.variables), calculatedVariables)) {
-      props.changeVariables(calculatedVariables)
+    const calculatedVariables = getVariables(this.props.latex)
+    if (!isEqual(Object.keys(this.props.variables), calculatedVariables)) {
+      this.props.changeVariables(calculatedVariables)
     }
 
-    if (props.latex) {
+    if (this.props.latex) {
       try {
-        solution = solveVariables(props.latex, props.variables)
+        solution = solveVariables(this.props.latex, this.props.variables)
         solutionEl = <MathField latex={solution} />
       } catch (e) {
         solution = e.message
-        const asciiMath = new AlgebraLatex(props.latex).toMath()
+        const asciiMath = new AlgebraLatex(this.props.latex).toMath()
         solutionEl = (
-          <div className={style.center}>
+          <Styles.CenterDiv>
             Could not simplify math: {solution}
             <br />
             <i>{asciiMath}</i>
-          </div>
+          </Styles.CenterDiv>
         )
       }
     }
 
     const self = this
-    const inputs = Object.keys(props.variables).map(v => (
+    const inputs = Object.keys(this.props.variables).map(v => (
       <div key={v}>
         {v}:
         <input
-          value={props.variables[v]}
+          value={this.props.variables[v] || ''}
           onChange={x => {
             self.inputChanged(x, v)
           }}
@@ -59,7 +68,7 @@ class Variables extends Component {
 
     return (
       <div>
-        <div className={style.header}>Simplified:</div> {solutionEl}
+        <Styles.Header>Simplified:</Styles.Header> {solutionEl}
         Variables {inputs}
       </div>
     )

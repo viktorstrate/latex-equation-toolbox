@@ -6,9 +6,9 @@ import store from '../store'
 import setupLayout from './Layout'
 import Toolbar from './Toolbar'
 
-const Header = styled.div`
+const Container = styled.div`
   width: 100vw;
-  height: calc(100vh - #{$header-height}) !important;
+  height: calc(100vh - 50px) !important;
 `
 
 export default class App extends React.Component {
@@ -33,14 +33,12 @@ export default class App extends React.Component {
       <Provider store={store}>
         <div>
           <Toolbar />
-          <Header>
-            <div
-              ref={layout => {
-                this.layout = layout
-              }}
-              id="app"
-            />
-          </Header>
+          <Container
+            ref={layout => {
+              this.layout = layout
+            }}
+            id="app"
+          />
         </div>
       </Provider>
     )

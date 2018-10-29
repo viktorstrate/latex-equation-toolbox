@@ -3,9 +3,11 @@
 // import * as GoldenLayout from 'golden-layout'
 import * as React from 'react'
 import * as jquery from 'jquery'
-import 'golden-layout/src/css/goldenlayout-base.css'
+// require('golden-layout/src/css/goldenlayout-base.css')
 
-var GoldenLayout = require('golden-layout')({ react: React, jquery: jquery })
+// var GoldenLayout = require('golden-layout')({ react: React, jquery: jquery })
+var GoldenLayout = require('golden-layout')
+// const GoldenLayout = require('imports-loader?ReactDOM=react-dom!imports-loader?React=react!golden-layout')
 
 import store from '../store'
 import { actions as layoutActions } from '../reducers/layout'
@@ -114,9 +116,18 @@ function updateTheme(newDark) {
     let link = document.createElement('link')
     link.type = 'text/css'
     link.rel = 'stylesheet'
-    link.href = `${
-      process.env.NODE_ENV === 'production' ? '/latex-equation-toolbox' : ''
-    }/style/goldenlayout-${newDark ? 'dark' : 'light'}-theme.css`
+    // link.href = `${
+    //   process.env.NODE_ENV === 'production' ? '/latex-equation-toolbox' : ''
+    // }/style/goldenlayout-${newDark ? 'dark' : 'light'}-theme.css`
+
+    if (newDark) {
+      link.href =
+        'https://cdnjs.cloudflare.com/ajax/libs/golden-layout/1.5.9/css/goldenlayout-dark-theme.css'
+    } else {
+      link.href =
+        'https://cdnjs.cloudflare.com/ajax/libs/golden-layout/1.5.9/css/goldenlayout-light-theme.css'
+    }
+
     link.id = 'layout-theme-style'
 
     let oldStyle

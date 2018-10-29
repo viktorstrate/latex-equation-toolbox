@@ -29,10 +29,7 @@ const Container = styled.div`
   height: 100%;
 `
 
-enum Sign {
-  arrows,
-  greek,
-}
+const categories = ['arrows', 'greek']
 
 interface SignItem {
   code: string
@@ -41,7 +38,7 @@ interface SignItem {
 
 interface Props {
   latex: string
-  visibleTabs: Sign[]
+  visibleTabs: string[]
   changeLatex(string)
   toggleTab(string)
 }
@@ -54,9 +51,9 @@ class Symbols extends React.Component<Props> {
     this.insertSymbol = this.insertSymbol.bind(this)
   }
 
-  loadCategory(sign: Sign) {
-    const signName = Sign[sign]
-    const data = require('./signs/' + signName + '/data.json')
+  loadCategory(sign: string) {
+    console.log('Sign name', sign)
+    const data = require('./signs/' + sign + '/data.json')
 
     const visibleStyle = {
       display: 'inline',
@@ -65,14 +62,19 @@ class Symbols extends React.Component<Props> {
     const self = this
 
     let elements = data.map((item: SignItem) => {
-      const icon = require('./signs/' + signName + '/' + item.icon)
+      const icon = require('./signs/' + sign + '/' + item.icon)
       return (
         <ItemDiv
-          show={self.props.visibleTabs.includes(sign)}
+          show={self.props.visibleTabs[sign] == true}
           key={item.code}
           onClick={this.insertSymbol.bind(null, item.code)}
         >
-          <img src={icon} />
+          {/* <img src={icon} /> */}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: icon,
+            }}
+          />
         </ItemDiv>
       )
     })
@@ -81,10 +83,8 @@ class Symbols extends React.Component<Props> {
   }
 
   loadCategories() {
-    const categories = require('./signs/categories.json')
-
     let elements = categories.map(category => (
-      <div>
+      <div key={category}>
         <Category onClick={this.toggleTab}>{category}</Category>
         {this.loadCategory(category)}
       </div>

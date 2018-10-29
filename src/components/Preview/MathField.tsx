@@ -2,7 +2,7 @@ import * as React from 'react'
 //import { Context, Node } from 'react-mathjax'
 import * as MathStyle from './styles'
 import CopyButton from './CopyButton'
-import AlgebraLatex from 'algebra-latex'
+const AlgebraLatex = require('algebra-latex')
 
 // import style from './style.sass'
 import loadMj2img from '../ImageExport/mathjax-setup'
@@ -72,7 +72,7 @@ export default class MathField extends React.Component<Props, State> {
         <MathStyle.CenterDiv>
           <CopyButton value={this.props.latex} name="Copy as latex" />
           <CopyButton
-            value={new AlgebraLatex(this.props.latex).toMath()}
+            value={new AlgebraLatex().parseLatex(this.props.latex).toMath()}
             name="Copy as text"
           />
         </MathStyle.CenterDiv>
