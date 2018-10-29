@@ -3,8 +3,25 @@ import { connect } from 'react-redux'
 import * as PropTypes from 'prop-types'
 
 // import style from './style.sass'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import { views, layout } from '../Layout'
+
+interface BodyStylesProps {
+  darkTheme: boolean
+}
+
+const BodyStyles = createGlobalStyle<BodyStylesProps>`
+  body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: ${props => (props.darkTheme ? '#334' : '#dde')};
+    font-family: arial, sans-serif;
+    font-weight: 400;
+    color: ${props => (props.darkTheme ? '#ddd' : '#222')};
+  }
+`
 
 const Component = styled.div`
   display: inline;
@@ -28,6 +45,7 @@ const Header = styled.div`
 
 interface Props {
   layoutLoaded: boolean
+  darkTheme: boolean
 }
 
 class Toolbar extends React.Component<Props> {
@@ -79,10 +97,16 @@ class Toolbar extends React.Component<Props> {
         </Category>
       )
     })
-    return <Header>{viewElements}</Header>
+    return (
+      <Header>
+        <BodyStyles darkTheme={this.props.darkTheme} />
+        {viewElements}
+      </Header>
+    )
   }
 }
 
 export default connect(state => ({
   layoutLoaded: state.layout.loaded,
+  darkTheme: state.settings.darkTheme,
 }))(Toolbar)

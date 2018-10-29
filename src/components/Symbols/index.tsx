@@ -16,6 +16,14 @@ const ItemDiv = styled.div<ItemDivProps>`
   display: ${props => (props.show ? 'inline' : 'none')};
 `
 
+const IconWrapper = styled.div`
+  background-color: #444;
+  width: 48px;
+  margin: 2px;
+  cursor: pointer;
+  display: inline-block;
+`
+
 const Category = styled.div`
   background-color: #333;
   margin: 4px 0;
@@ -52,7 +60,6 @@ class Symbols extends React.Component<Props> {
   }
 
   loadCategory(sign: string) {
-    console.log('Sign name', sign)
     const data = require('./signs/' + sign + '/data.json')
 
     const visibleStyle = {
@@ -70,7 +77,7 @@ class Symbols extends React.Component<Props> {
           onClick={this.insertSymbol.bind(null, item.code)}
         >
           {/* <img src={icon} /> */}
-          <div
+          <IconWrapper
             dangerouslySetInnerHTML={{
               __html: icon,
             }}

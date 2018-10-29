@@ -1,11 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { getVariables, solveVariable } from '../calculations'
+import { solveVariable } from '../calculations'
 import MathField from '../Preview/MathField'
 
 import { actions, CalculationState } from '../../reducers/calculations'
-
-const isEqual = require('lodash/isEqual')
 
 interface PropsType extends CalculationState {
   latex: string
@@ -24,16 +22,11 @@ class Equations extends React.Component<PropsType, any> {
   }
 
   render() {
-    const calculatedVariables = getVariables(this.props.latex)
-    if (!isEqual(Object.keys(this.props.variables), calculatedVariables)) {
-      this.props.changeVariables(calculatedVariables)
-    }
-
     const variableButtons = Object.keys(this.props.variables).map(v => {
       let style = null
       if (v === this.props.variable) {
         style = {
-          'background-color': 'red',
+          backgroundColor: 'red',
         }
       }
       return (

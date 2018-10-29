@@ -1,16 +1,39 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-// eslint-disable-next-line
-//import MathQuill from 'exports-loader?window.MathQuill!imports-loader?window.jQuery=jquery!mathquill/build/mathquill.js'
-//import 'mathquill/build/mathquill.css'
+import MathQuill, { addStyles as addMathquillStyles } from 'react-mathquill'
+import styled, { createGlobalStyle } from 'styled-components'
 
-// import style from './style.sass'
+addMathquillStyles()
+
+interface MathQuillStylesProps {
+  darkTheme: boolean
+}
+
+const MathquillStyles = createGlobalStyle<MathQuillStylesProps>`
+  .mq-editable-field {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    padding: 20px;
+    border: none !important;
+  }
+
+  .mq-cursor {
+    border-color: ${props => (props.darkTheme ? 'white' : 'black')} !important;
+  }
+`
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`
 
 import { actions } from '../../reducers/input'
 
 interface Props {
   latex: string
+  darkTheme: boolean
+  changeLatex(latex: string)
 }
 
 class InputField extends React.Component<Props> {
@@ -55,7 +78,17 @@ class InputField extends React.Component<Props> {
       //     this.mathElement = x
       //   }}
       // />
-      <div>MathQuill element goes here</div>
+      <Container>
+        <MathquillStyles darkTheme={this.props.darkTheme} />
+        <MathQuill
+          latex={this.props.latex} // Initial latex value for the input field
+          onChange={latex => {
+            if (latex.trim() !== this.props.latex.trim()) {
+              this.props.changeLatex(latex)
+            }
+          }}
+        />
+      </Container>
     )
   }
 }
@@ -63,6 +96,7 @@ class InputField extends React.Component<Props> {
 export default connect(
   state => ({
     latex: state.input.latex,
+    darkTheme: state.settings.darkTheme,
   }),
   actions
 )(InputField)

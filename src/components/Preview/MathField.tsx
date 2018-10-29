@@ -72,7 +72,11 @@ export default class MathField extends React.Component<Props, State> {
         <MathStyle.CenterDiv>
           <CopyButton value={this.props.latex} name="Copy as latex" />
           <CopyButton
-            value={new AlgebraLatex().parseLatex(this.props.latex).toMath()}
+            value={
+              this.props.latex
+                ? new AlgebraLatex().parseLatex(this.props.latex).toMath()
+                : ''
+            }
             name="Copy as text"
           />
         </MathStyle.CenterDiv>

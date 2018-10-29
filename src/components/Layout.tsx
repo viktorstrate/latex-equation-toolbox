@@ -13,13 +13,13 @@ import store from '../store'
 import { actions as layoutActions } from '../reducers/layout'
 
 const viewComponents = {
-  'visual-input': import('./VisualInput'),
-  'code-input': import('./CodeInput'),
-  symbols: import('./Symbols'),
-  preview: import('./Preview'),
-  equations: import('./Equations'),
-  'image-export': import('./ImageExport'),
-  settings: import('./Settings/Settings'),
+  'visual-input': import(/* webpackChunkName: "comp-visual-input" */ './VisualInput'),
+  'code-input': import(/* webpackChunkName: "comp-code-input" */ './CodeInput'),
+  symbols: import(/* webpackChunkName: "comp-symbols" */ './Symbols'),
+  preview: import(/* webpackChunkName: "comp-preview" */ './Preview'),
+  equations: import(/* webpackChunkName: "comp-equations" */ './Equations'),
+  'image-export': import(/* webpackChunkName: "comp-image-export" */ './ImageExport'),
+  settings: import(/* webpackChunkName: "comp-settings" */ './Settings/Settings'),
 }
 
 export let layout = null

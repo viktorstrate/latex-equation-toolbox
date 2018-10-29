@@ -8,6 +8,7 @@ module.exports = {
   mode: 'development',
   output: {
     filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
@@ -27,6 +28,9 @@ module.exports = {
           getCustomTransformers: () => ({
             before: createStyledComponentsTransformer(),
           }),
+          useCache: true,
+          useBabel: true,
+          babelCore: '@babel/core',
         },
       },
       { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
@@ -45,6 +49,7 @@ module.exports = {
         test: /\.svg$/,
         loader: 'svg-inline-loader',
         options: {
+          removeSVGTagAttrs: true,
           removeTags: true,
           removingTags: ['title', 'desc'],
         },

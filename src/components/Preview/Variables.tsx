@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { isEqual } from 'lodash'
+// import { isEqual } from 'lodash'
 // import AlgebraLatex from 'algebra-latex'
 const AlgebraLatex = require('algebra-latex')
 import { actions } from '../../reducers/calculations'
-import { getVariables, solveVariables } from '../calculations'
+import { solveVariables } from '../calculations'
 
 // import style from './style.sass'
 import * as Styles from './styles'
@@ -30,11 +30,6 @@ class Variables extends React.Component<Props> {
   render() {
     let solution = null
     let solutionEl = null
-
-    const calculatedVariables = getVariables(this.props.latex)
-    if (!isEqual(Object.keys(this.props.variables), calculatedVariables)) {
-      this.props.changeVariables(calculatedVariables)
-    }
 
     if (this.props.latex) {
       try {

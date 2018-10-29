@@ -6,8 +6,12 @@ const uniq = require('lodash/uniq')
 const math = require('mathjs')
 
 export const getVariables = (latex: string): string[] => {
+  if (!latex) {
+    return []
+  }
+
   latex = latex.replace('=', '+') // Used to parse equations
-  let parsedMath = new AlgebraLatex(latex)
+  let parsedMath = new AlgebraLatex().parseLatex(latex)
   parsedMath = parsedMath.toMath()
   console.log(parsedMath)
   try {
@@ -29,7 +33,7 @@ export const getVariables = (latex: string): string[] => {
 }
 
 export const solveVariables = (latex: string, variables: string[]) => {
-  let parsedMath = new AlgebraLatex(latex)
+  let parsedMath = new AlgebraLatex().parseLatex(latex)
   parsedMath = parsedMath.toMath()
   try {
     parsedMath = math.parse(parsedMath)

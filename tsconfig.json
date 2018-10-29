@@ -2,11 +2,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "moduleResolution": "node",
+    "module": "esnext",
     "sourceMap": true,
     "jsx": "react",
     "allowJs": true,
     "typeRoots": ["./typings", "./node_modules/@types/"],
     "lib": ["dom", "es7"]
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }

@@ -8,6 +8,7 @@ import { actions } from '../../reducers/input'
 require('codemirror/lib/codemirror.css')
 require('codemirror/mode/stex/stex')
 require('codemirror/theme/monokai.css')
+require('codemirror/theme/base16-light.css')
 
 const CodeMirrorStyled = styled(CodeMirror)`
   height: 100vh;
@@ -24,33 +25,26 @@ interface StateType {}
 
 class CodeInput extends React.Component<PropsType, StateType> {
   codeMirrorElm: any
+  editor: CodeMirror.Editor
 
   constructor(props) {
     super(props)
 
     this.onInputChange = this.onInputChange.bind(this)
     this.codeMirrorElm = null
+    this.editor = null
   }
 
   onInputChange(editor, data, value) {
     this.props.changeLatex(value)
   }
   render() {
-    let props = this.props
-
-    if (
-      this.codeMirrorElm !== null &&
-      this.codeMirrorElm.codeMirror.getValue() !== props.latex
-    ) {
-      const codeMirror = this.codeMirrorElm.codeMirror
-      codeMirror.setValue(props.latex)
-      codeMirror.setCursor(codeMirror.lineCount(), 0)
-    }
+    const themeName = this.props.darkTheme ? 'monokai' : 'base16-light'
 
     return (
       <CodeMirrorStyled
         options={{
-          theme: props.darkTheme ? 'monokai' : 'default',
+          theme: themeName,
         }}
         ref={el => {
           this.codeMirrorElm = el
@@ -58,6 +52,9 @@ class CodeInput extends React.Component<PropsType, StateType> {
         value={this.props.latex}
         onBeforeChange={this.onInputChange}
         onChange={() => {}}
+        editorDidMount={x => {
+          this.editor = x
+        }}
       />
     )
   }
@@ -66,7 +63,7 @@ class CodeInput extends React.Component<PropsType, StateType> {
 export default connect(
   state => ({
     latex: state.input.latex,
-    darkTheme: state.general.darkTheme,
+    darkTheme: state.settings.darkTheme,
   }),
   actions
 )(CodeInput)

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider } from 'react-redux'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 import store from '../store'
 import setupLayout from './Layout'
