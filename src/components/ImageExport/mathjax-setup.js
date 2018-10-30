@@ -1,73 +1,74 @@
-let mj2img;
+let mj2img
 
 window.MathJax = {
-  AuthorInit: function () {
+  AuthorInit: function() {
     console.log('Initialization')
-  }
-};
+  },
+}
 
 let loadListeners = []
 
 // Thanks to Peter Krautzberger for his codepen https://codepen.io/pkra/details/PZLyQO
 window.MathJax = {
-  jax: ["input/TeX", "output/SVG"],
-  extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
+  jax: ['input/TeX', 'output/SVG'],
+  extensions: ['tex2jax.js', 'MathMenu.js', 'MathZoom.js'],
   showMathMenu: false,
   showProcessingMessages: false,
-  messageStyle: "none",
+  messageStyle: 'none',
   SVG: {
-    useGlobalCache: false
+    useGlobalCache: false,
   },
   TeX: {
-    extensions: ["AMSmath.js", "AMSsymbols.js", "autoload-all.js"]
+    extensions: ['AMSmath.js', 'AMSsymbols.js', 'autoload-all.js'],
   },
-  AuthorInit: function () {
+  AuthorInit: function() {
     console.log('AuthorInit called')
-    MathJax.Hub.Register.StartupHook("End", function () {
-      mj2img = function (latex, callback) {
+    MathJax.Hub.Register.StartupHook('End', function() {
+      mj2img = function(latex, callback) {
         let texstring = `\\[${latex}\\]`
 
-        var input = texstring;
+        var input = texstring
 
-        var wrapper = document.createElement("div");
+        var wrapper = document.createElement('div')
 
-        wrapper.innerHTML = input;
+        wrapper.innerHTML = input
 
-        var output = { svg: "", img: "" };
-        MathJax.Hub.Queue(["Typeset", MathJax.Hub, wrapper]);
-        MathJax.Hub.Queue(function () {
-
-          var mjOut = wrapper.getElementsByTagName("svg")[0];
-          mjOut.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        var output = { svg: '', img: '' }
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub, wrapper])
+        MathJax.Hub.Queue(function() {
+          var mjOut = wrapper.getElementsByTagName('svg')[0]
+          mjOut.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 
           // Example "22.676ex"
-          let widthStr = mjOut.getAttribute("width")
-          let heightStr = mjOut.getAttribute("height")
+          let widthStr = mjOut.getAttribute('width')
+          let heightStr = mjOut.getAttribute('height')
 
           let width = widthStr.substr(0, widthStr.length - 2)
           let height = heightStr.substr(0, heightStr.length - 2)
 
           let scale = 1
 
-          mjOut.setAttribute('width', `${width*scale}ex`)
-          mjOut.setAttribute('height', `${height*scale}ex`)
+          mjOut.setAttribute('width', `${width * scale}ex`)
+          mjOut.setAttribute('height', `${height * scale}ex`)
 
           // thanks, https://spin.atomicobject.com/2014/01/21/convert-svg-to-png/
-          output.svg = mjOut.outerHTML;
-          var image = new Image();
-          let svgData = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(output.svg)));
+          output.svg = mjOut.outerHTML
+          var image = new Image()
+          let svgData =
+            'data:image/svg+xml;base64,' +
+            window.btoa(unescape(encodeURIComponent(output.svg)))
           output.svgData = svgData
           image.src = svgData
-          image.onload = function () {
-            var canvas = document.createElement('canvas');
-            canvas.width = image.width;
-            canvas.height = image.height;
-            var context = canvas.getContext('2d');
-            context.drawImage(image, 0, 0);
-            output.img = canvas.toDataURL('image/png');
-            callback(output);
-          };
-        });
+          image.onload = function() {
+            var canvas = document.createElement('canvas')
+            canvas.width = image.width
+            canvas.height = image.height
+            var context = canvas.getContext('2d')
+            context.drawImage(image, 0, 0)
+            output.img = canvas.toDataURL('image/png')
+            callback(output)
+          }
+        })
       }
 
       for (let listener of loadListeners) {
@@ -80,27 +81,27 @@ window.MathJax = {
       //   console.log('here', output)
       //   //document.getElementById("target").innerHTML = output.svg;
       // });
-    });
-  }
-};
+    })
+  },
+}
 
-(function (d, script) {
-  script = d.createElement('script');
-  script.type = 'text/javascript';
-  script.async = true;
-  script.onload = function () {
+;(function(d, script) {
+  script = d.createElement('script')
+  script.type = 'text/javascript'
+  script.async = true
+  script.onload = function() {
     // remote script has loaded
-  };
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js';
-  d.getElementsByTagName('head')[0].appendChild(script);
-}(document));
+  }
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js'
+  d.getElementsByTagName('head')[0].appendChild(script)
+})(document)
 
 // export default () => {
 //   return mj2img
 // }
 
 export default () => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (mj2img === undefined) {
       loadListeners.push(resolve)
     } else {

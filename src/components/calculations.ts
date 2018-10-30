@@ -1,15 +1,23 @@
-import AlgebraLatex from 'algebra-latex'
+// import AlgebraLatex from 'algebra-latex'
+const AlgebraLatex = require('algebra-latex')
 import CQ from 'coffeequate'
 
 const uniq = require('lodash/uniq')
 const math = require('mathjs')
 
-export const getVariables = (latex: string):string[] => {
-  latex = latex.replace('=', '+') // Used to parse equations
-  let parsedMath = new AlgebraLatex(latex)
-  parsedMath = parsedMath.toMath()
-  console.log(parsedMath)
+export const getVariables = (latex: string): string[] => {
+  if (!latex) {
+    return []
+  }
+
+  let parsedMath
+
   try {
+    latex = latex.replace('=', '+') // Used to parse equations
+    parsedMath = new AlgebraLatex().parseLatex(latex)
+    parsedMath = parsedMath.toMath()
+    console.log(parsedMath)
+
     parsedMath = math.parse(parsedMath)
   } catch (e) {
     return []
@@ -27,8 +35,8 @@ export const getVariables = (latex: string):string[] => {
   return variables
 }
 
-export const solveVariables = (latex:string, variables:string[]) => {
-  let parsedMath = new AlgebraLatex(latex)
+export const solveVariables = (latex: string, variables: string[]) => {
+  let parsedMath = new AlgebraLatex().parseLatex(latex)
   parsedMath = parsedMath.toMath()
   try {
     parsedMath = math.parse(parsedMath)
@@ -41,7 +49,7 @@ export const solveVariables = (latex:string, variables:string[]) => {
   return math.simplify(parsedMath, variables).toTex()
 }
 
-export const solveVariable = (latex:string, variable:string):string => {
+export const solveVariable = (latex: string, variable: string): string => {
   if (variable === null || variable === '') {
     return latex
   }
@@ -49,7 +57,7 @@ export const solveVariable = (latex:string, variable:string):string => {
   let parsedMath = null
 
   try {
-    parsedMath = new AlgebraLatex(latex).toCoffeequate(CQ)
+    parsedMath = new AlgebraLatex().parseLatex(latex).toCoffeequate(CQ)
     console.log('parsedMath', parsedMath)
   } catch (e) {
     console.log('Could not parse for solve variable:', e)
@@ -57,15 +65,14 @@ export const solveVariable = (latex:string, variable:string):string => {
   }
 
   try {
-
     const solved = parsedMath.solve(variable)
     console.log('solved', solved)
 
     return solved.reduce((prev, curr) => {
       if (prev === null) {
-        return curr.toLaTeX()
+        return variable + ' = ' + curr.toLaTeX()
       } else {
-        return prev + '\\vee ' + curr.toLaTeX()
+        return prev + '\\vee ' + variable + ' = ' + curr.toLaTeX()
       }
     }, null)
   } catch (e) {
