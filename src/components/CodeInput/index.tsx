@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 import { actions } from '../../reducers/input'
 
@@ -9,6 +9,16 @@ require('codemirror/lib/codemirror.css')
 require('codemirror/mode/stex/stex')
 require('codemirror/theme/monokai.css')
 require('codemirror/theme/base16-light.css')
+
+const CodeMirrorGlobalStyles = createGlobalStyle`
+  .CodeMirror {
+    height: 100% !important;
+  }
+`
+
+const Container = styled.div`
+  height: 100%;
+`
 
 const CodeMirrorStyled = styled(CodeMirror)`
   height: 100vh;
@@ -42,20 +52,24 @@ class CodeInput extends React.Component<PropsType, StateType> {
     const themeName = this.props.darkTheme ? 'monokai' : 'base16-light'
 
     return (
-      <CodeMirrorStyled
-        options={{
-          theme: themeName,
-        }}
-        ref={el => {
-          this.codeMirrorElm = el
-        }}
-        value={this.props.latex}
-        onBeforeChange={this.onInputChange}
-        onChange={() => {}}
-        editorDidMount={x => {
-          this.editor = x
-        }}
-      />
+      <Container>
+        <CodeMirrorGlobalStyles />
+        <CodeMirrorStyled
+          options={{
+            theme: themeName,
+            lineWrapping: true,
+          }}
+          ref={el => {
+            this.codeMirrorElm = el
+          }}
+          value={this.props.latex}
+          onBeforeChange={this.onInputChange}
+          onChange={() => {}}
+          editorDidMount={x => {
+            this.editor = x
+          }}
+        />
+      </Container>
     )
   }
 }

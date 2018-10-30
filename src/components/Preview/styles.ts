@@ -30,9 +30,10 @@ export const CenterDiv = styled.div`
 export const Container = styled.div`
   height: 100%;
   overflow: scroll;
+  padding: 8px 12px 16px;
 `
 
-export const Header = styled.div`
-  font-size: 20px;
-  padding: 8px;
+export const Header = styled.h2`
+  padding: 0;
+  margin: 0;
 `

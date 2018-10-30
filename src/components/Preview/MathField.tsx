@@ -63,6 +63,13 @@ export default class MathField extends React.Component<Props, State> {
       this.delayedUpdateMath()
     }
 
+    let mathString = null
+    if (this.props.latex) {
+      try {
+        mathString = new AlgebraLatex().parseLatex(this.props.latex).toMath()
+      } catch (e) {}
+    }
+
     return (
       <MathStyle.MathFieldDiv>
         <MathStyle.MathJaxStyle />
@@ -71,14 +78,7 @@ export default class MathField extends React.Component<Props, State> {
         </MathStyle.ImageWrapper>
         <MathStyle.CenterDiv>
           <CopyButton value={this.props.latex} name="Copy as latex" />
-          <CopyButton
-            value={
-              this.props.latex
-                ? new AlgebraLatex().parseLatex(this.props.latex).toMath()
-                : ''
-            }
-            name="Copy as text"
-          />
+          <CopyButton value={mathString} name="Copy as text" />
         </MathStyle.CenterDiv>
       </MathStyle.MathFieldDiv>
     )

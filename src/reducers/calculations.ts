@@ -39,8 +39,8 @@ export default (state: CalculationState = initialState, action) => {
         variables: {
           ...state.variables,
           [action.variable]: action.value,
-          variable,
         },
+        variable,
       }
     case actionTypes.SOLVE_VARIABLE:
       return {

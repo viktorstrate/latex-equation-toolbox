@@ -10,11 +10,14 @@ export const getVariables = (latex: string): string[] => {
     return []
   }
 
-  latex = latex.replace('=', '+') // Used to parse equations
-  let parsedMath = new AlgebraLatex().parseLatex(latex)
-  parsedMath = parsedMath.toMath()
-  console.log(parsedMath)
+  let parsedMath
+
   try {
+    latex = latex.replace('=', '+') // Used to parse equations
+    parsedMath = new AlgebraLatex().parseLatex(latex)
+    parsedMath = parsedMath.toMath()
+    console.log(parsedMath)
+
     parsedMath = math.parse(parsedMath)
   } catch (e) {
     return []
@@ -54,7 +57,7 @@ export const solveVariable = (latex: string, variable: string): string => {
   let parsedMath = null
 
   try {
-    parsedMath = new AlgebraLatex(latex).toCoffeequate(CQ)
+    parsedMath = new AlgebraLatex().parseLatex(latex).toCoffeequate(CQ)
     console.log('parsedMath', parsedMath)
   } catch (e) {
     console.log('Could not parse for solve variable:', e)
@@ -67,9 +70,9 @@ export const solveVariable = (latex: string, variable: string): string => {
 
     return solved.reduce((prev, curr) => {
       if (prev === null) {
-        return curr.toLaTeX()
+        return variable + ' = ' + curr.toLaTeX()
       } else {
-        return prev + '\\vee ' + curr.toLaTeX()
+        return prev + '\\vee ' + variable + ' = ' + curr.toLaTeX()
       }
     }, null)
   } catch (e) {

@@ -30,8 +30,7 @@ class Preview extends React.Component<Props> {
     return (
       <MathStyle.Container>
         <div>
-          <MathStyle.Header>Math:</MathStyle.Header> {mathEl}
-          <hr />
+          <MathStyle.Header>Preview rendered math</MathStyle.Header> {mathEl}
           <Variables store={this.props.store} />
         </div>
       </MathStyle.Container>

@@ -2,6 +2,7 @@ const path = require('path')
 const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
   .default
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/index.tsx',
@@ -58,6 +59,12 @@ module.exports = {
   },
 
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: 'src/assets/',
+        to: './',
+      },
+    ]),
     new HtmlWebpackPlugin({
       title: 'Latex Equation Toolbox',
       template: './src/index.html',

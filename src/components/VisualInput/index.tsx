@@ -14,6 +14,7 @@ const MathquillStyles = createGlobalStyle<MathQuillStylesProps>`
   .mq-editable-field {
     width: calc(100% - 40px);
     height: calc(100% - 40px);
+    font-size: 26px !important;
     padding: 20px;
     border: none !important;
   }
@@ -29,63 +30,73 @@ const Container = styled.div`
 `
 
 import { actions } from '../../reducers/input'
+import { Store } from 'redux'
 
 interface Props {
   latex: string
   darkTheme: boolean
+  store: Store
   changeLatex(latex: string)
 }
 
 class InputField extends React.Component<Props> {
   mathElement: HTMLElement | null
   mathField: any
+  previousLatex: string
+  unsubscribe: Function
 
   constructor(props) {
     super(props)
     this.mathElement = null
     this.mathField = null
+    this.previousLatex = null
+
+    this.updateLatex.bind(this)
   }
 
   componentDidMount() {
-    /*const self = this
+    // this.unsubscribe = this.props.store.subscribe(() => {
+    //   const state = this.props.store.getState()
+    //   const newLatex = state.input.latex
+    //   if (newLatex != this.previousLatex) {
+    //     this.previousLatex = newLatex
+    //     if (this.mathElement.getAttribute('class').includes('mq-focused')) {
+    //       this.updateLatex()
+    //     }
+    //   }
+    // })
+  }
 
-    const config = {
-      handlers: {
-        edit: function() {
-          if (self.mathField) {
-            if (self.mathField.latex().trim() !== self.props.latex.trim()) {
-              self.props.changeLatex(self.mathField.latex())
-            }
-          }
-        },
-      },
-      restrictMismatchedBrackets: true,
-    }
+  updateLatex() {
+    this.mathField.latex(this.props.store.getState().input.latex)
+  }
 
-    this.mathField = MathQuill.MathField(this.mathElement, config)
-    this.mathField.latex(this.props.latex)*/
+  componentWillUnmount() {
+    // this.unsubscribe()
   }
 
   render() {
-    // if (this.mathField !== null && props.latex !== this.mathField.latex()) {
-    //   this.mathField.latex(props.latex)
-    // }
-
     return (
-      // <div
-      //   className={style.inputfield}
-      //   ref={x => {
-      //     this.mathElement = x
-      //   }}
-      // />
-      <Container>
+      <Container
+        onClick={() => {
+          this.updateLatex()
+        }}
+      >
         <MathquillStyles darkTheme={this.props.darkTheme} />
         <MathQuill
+          ref={x => {
+            if (this.mathElement == null) {
+              this.mathElement = x.element
+            }
+          }}
           latex={this.props.latex} // Initial latex value for the input field
           onChange={latex => {
             if (latex.trim() !== this.props.latex.trim()) {
               this.props.changeLatex(latex)
             }
+          }}
+          mathquillDidMount={instance => {
+            this.mathField = instance
           }}
         />
       </Container>

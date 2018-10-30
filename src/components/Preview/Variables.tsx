@@ -36,15 +36,23 @@ class Variables extends React.Component<Props> {
         solution = solveVariables(this.props.latex, this.props.variables)
         solutionEl = <MathField latex={solution} />
       } catch (e) {
-        solution = e.message
-        const asciiMath = new AlgebraLatex(this.props.latex).toMath()
-        solutionEl = (
-          <Styles.CenterDiv>
-            Could not simplify math: {solution}
-            <br />
-            <i>{asciiMath}</i>
-          </Styles.CenterDiv>
-        )
+        try {
+          const asciiMath = new AlgebraLatex(this.props.latex).toMath()
+
+          solutionEl = (
+            <Styles.CenterDiv>
+              Could not simplify math: {e.message}
+              <br />
+              <i>{asciiMath}</i>
+            </Styles.CenterDiv>
+          )
+        } catch (e) {
+          solutionEl = (
+            <Styles.CenterDiv>
+              Could not parse latex: {e.message}
+            </Styles.CenterDiv>
+          )
+        }
       }
     }
 
@@ -61,10 +69,20 @@ class Variables extends React.Component<Props> {
       </div>
     ))
 
+    let inputSection = null
+    if (inputs.length > 0) {
+      inputSection = (
+        <div>
+          <h3>Solve variables:</h3>
+          {inputs}
+        </div>
+      )
+    }
+
     return (
       <div>
-        <Styles.Header>Simplified:</Styles.Header> {solutionEl}
-        Variables {inputs}
+        <Styles.Header>Simplified expression</Styles.Header> {solutionEl}
+        {inputSection}
       </div>
     )
   }

@@ -12,20 +12,24 @@ interface ItemDivProps {
   show: boolean
 }
 
+interface ThemeStyleProp {
+  darkTheme: boolean
+}
+
 const ItemDiv = styled.div<ItemDivProps>`
   display: ${props => (props.show ? 'inline' : 'none')};
 `
 
-const IconWrapper = styled.div`
-  background-color: #444;
+const IconWrapper = styled.div<ThemeStyleProp>`
+  background-color: ${props => (props.darkTheme ? '#444' : '#eee')};
   width: 48px;
   margin: 2px;
   cursor: pointer;
   display: inline-block;
 `
 
-const Category = styled.div`
-  background-color: #333;
+const Category = styled.div<ThemeStyleProp>`
+  background-color: ${props => (props.darkTheme ? '#333' : '#fff')};
   margin: 4px 0;
   padding: 4px;
   cursor: pointer;
@@ -47,6 +51,7 @@ interface SignItem {
 interface Props {
   latex: string
   visibleTabs: string[]
+  darkTheme: boolean
   changeLatex(string)
   toggleTab(string)
 }
@@ -81,6 +86,7 @@ class Symbols extends React.Component<Props> {
             dangerouslySetInnerHTML={{
               __html: icon,
             }}
+            darkTheme={this.props.darkTheme}
           />
         </ItemDiv>
       )
@@ -92,7 +98,9 @@ class Symbols extends React.Component<Props> {
   loadCategories() {
     let elements = categories.map(category => (
       <div key={category}>
-        <Category onClick={this.toggleTab}>{category}</Category>
+        <Category darkTheme={this.props.darkTheme} onClick={this.toggleTab}>
+          {category}
+        </Category>
         {this.loadCategory(category)}
       </div>
     ))
@@ -118,6 +126,7 @@ export default connect(
   state => ({
     ...state.symbols,
     latex: state.input.latex,
+    darkTheme: state.settings.darkTheme,
   }),
   {
     ...actions,
