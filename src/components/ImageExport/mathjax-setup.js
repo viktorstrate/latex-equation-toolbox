@@ -84,7 +84,6 @@ window.MathJax = {
     })
   },
 }
-
 ;(function(d, script) {
   script = d.createElement('script')
   script.type = 'text/javascript'

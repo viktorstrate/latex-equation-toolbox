@@ -29,7 +29,7 @@ export const CenterDiv = styled.div`
 
 export const Container = styled.div`
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   padding: 8px 12px 16px;
 `
 

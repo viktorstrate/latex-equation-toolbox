@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import * as PropTypes from 'prop-types'
-import * as MathStyle from './styles'
+import * as MathStyle from '../styles'
 
 import MathField from './MathField'
 import Variables from './Variables'

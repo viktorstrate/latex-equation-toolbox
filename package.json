@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "rm -rf dist/ && webpack --mode production",
-    "deploy": "yarn run build --public-url '/latex-equation-toolbox/' && gh-pages -d build/",
+    "deploy": "yarn run build --output-public-path '/latex-equation-toolbox/' && gh-pages -d dist/",
     "lint": "eslint src",
     "test": "jest ./src"
   },

@@ -7,7 +7,7 @@ import { actions } from '../../reducers/calculations'
 import { solveVariables } from '../calculations'
 
 // import style from './style.sass'
-import * as Styles from './styles'
+import * as Styles from '../styles'
 
 import MathField from './MathField'
 
@@ -31,7 +31,7 @@ class Variables extends React.Component<Props> {
     let solution = null
     let solutionEl = null
 
-    if (this.props.latex) {
+    if (this.props.latex && !this.props.latex.includes('=')) {
       try {
         solution = solveVariables(this.props.latex, this.props.variables)
         solutionEl = <MathField latex={solution} />
@@ -54,6 +54,10 @@ class Variables extends React.Component<Props> {
           )
         }
       }
+    } else if (this.props.latex.includes('=')) {
+      solutionEl = (
+        <Styles.CenterDiv>Cannot simplify equations</Styles.CenterDiv>
+      )
     }
 
     const self = this

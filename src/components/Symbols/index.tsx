@@ -37,7 +37,7 @@ const Category = styled.div<ThemeStyleProp>`
 `
 
 const Container = styled.div`
-  overflow: scroll;
+  overflow-y: scroll;
   height: 100%;
 `
 

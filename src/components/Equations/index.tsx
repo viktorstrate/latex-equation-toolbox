@@ -2,6 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { solveVariable } from '../calculations'
 import MathField from '../Preview/MathField'
+import * as Styles from '../styles'
 
 import { actions, CalculationState } from '../../reducers/calculations'
 
@@ -43,7 +44,8 @@ class Equations extends React.Component<PropsType, any> {
     })
 
     return (
-      <div>
+      <Styles.Container>
+        <Styles.Header>Equations</Styles.Header>
         <MathField
           latex={solveVariable(this.props.latex, this.props.variable)}
         />
@@ -56,7 +58,7 @@ class Equations extends React.Component<PropsType, any> {
           None
         </button>
         {variableButtons}
-      </div>
+      </Styles.Container>
     )
   }
 }

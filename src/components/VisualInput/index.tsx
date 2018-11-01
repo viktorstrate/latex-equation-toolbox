@@ -55,6 +55,7 @@ class InputField extends React.Component<Props> {
   }
 
   componentDidMount() {
+    // Could be used later to mark that the input hasn't been updated
     // this.unsubscribe = this.props.store.subscribe(() => {
     //   const state = this.props.store.getState()
     //   const newLatex = state.input.latex
@@ -68,7 +69,10 @@ class InputField extends React.Component<Props> {
   }
 
   updateLatex() {
-    this.mathField.latex(this.props.store.getState().input.latex)
+    const stateLatex = this.props.store.getState().input.latex
+    if (stateLatex != this.mathField.latex()) {
+      this.mathField.latex(stateLatex)
+    }
   }
 
   componentWillUnmount() {

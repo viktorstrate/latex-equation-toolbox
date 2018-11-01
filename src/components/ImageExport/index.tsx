@@ -6,7 +6,7 @@ import loadMj2img from './mathjax-setup'
 import { actions } from '../../reducers/image-export'
 
 const ScrollBox = styled.div`
-  overflow: scroll;
+  overflow-y: scroll;
   height: 100%;
 `
 

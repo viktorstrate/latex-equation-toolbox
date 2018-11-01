@@ -1,6 +1,6 @@
 import * as React from 'react'
 //import { Context, Node } from 'react-mathjax'
-import * as MathStyle from './styles'
+import * as MathStyle from '../styles'
 import CopyButton from './CopyButton'
 const AlgebraLatex = require('algebra-latex')
 
