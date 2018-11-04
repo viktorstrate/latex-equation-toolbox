@@ -97,10 +97,17 @@ class Toolbar extends React.Component<Props> {
         </Category>
       )
     })
+
+    const clearLayout = () => {
+      localStorage.clear()
+      location.reload()
+    }
+
     return (
       <Header>
         <BodyStyles darkTheme={this.props.darkTheme} />
         {viewElements}
+        <button onClick={clearLayout}>Reset Layout</button>
       </Header>
     )
   }

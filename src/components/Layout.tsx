@@ -11,6 +11,7 @@ var GoldenLayout = require('golden-layout')
 
 import store from '../store'
 import { actions as layoutActions } from '../reducers/layout'
+import { saveLayout, getLayout } from '../persist-data'
 
 const viewComponents = {
   'visual-input': import(/* webpackChunkName: "comp-visual-input" */ './VisualInput'),
@@ -171,7 +172,13 @@ export default element => {
   )
 
   Promise.all(viewComponentModules).then(values => {
-    layout = new GoldenLayout(layoutConfig, element)
+    const savedLayout = getLayout(store)
+
+    if (savedLayout && Object.keys(savedLayout).length !== 0) {
+      layout = new GoldenLayout(savedLayout, element)
+    } else {
+      layout = new GoldenLayout(layoutConfig, element)
+    }
 
     for (let category of Object.keys(views)) {
       for (let component of views[category]) {
@@ -183,6 +190,31 @@ export default element => {
     }
 
     layout.init()
+
+    // const events = [
+    //   'initialised',
+    //   'windowOpened',
+    //   'windowClosed',
+    //   'itemDestroyed',
+    //   'itemCreated',
+    //   // 'componentCreated',
+    //   // 'rowCreated',
+    //   // 'columnCreated',
+    //   // 'stackCreated',
+    //   // 'tabCreated',
+    // ]
+
+    // for (let eventType of events) {
+    //   layout.on(eventType, () => {
+    //     console.log('saving from event', eventType)
+    //     saveLayout(layout.toConfig())
+    //   })
+    // }
+
+    layout.on('stateChanged', () => {
+      console.log('layout state changed')
+      saveLayout(layout.toConfig())
+    })
 
     updateWindowOnResize(layout)
 
