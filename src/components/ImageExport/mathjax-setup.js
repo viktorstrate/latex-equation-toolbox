@@ -43,13 +43,19 @@ window.MathJax = {
           let widthStr = mjOut.getAttribute('width')
           let heightStr = mjOut.getAttribute('height')
 
-          let width = widthStr.substr(0, widthStr.length - 2)
-          let height = heightStr.substr(0, heightStr.length - 2)
+          let scale = 1.4
 
-          let scale = 1
+          if (widthStr) {
+            let width = widthStr.substr(0, widthStr.length - 2)
+            width = Number(width)
+            mjOut.setAttribute('width', `${width * scale}ex`)
+          }
 
-          mjOut.setAttribute('width', `${width * scale}ex`)
-          mjOut.setAttribute('height', `${height * scale}ex`)
+          if (heightStr) {
+            let height = heightStr.substr(0, heightStr.length - 2)
+            height = Number(height)
+            mjOut.setAttribute('height', `${height * scale}ex`)
+          }
 
           // thanks, https://spin.atomicobject.com/2014/01/21/convert-svg-to-png/
           output.svg = mjOut.outerHTML
@@ -61,11 +67,13 @@ window.MathJax = {
           image.src = svgData
           image.onload = function() {
             var canvas = document.createElement('canvas')
-            canvas.width = image.width
-            canvas.height = image.height
-            var context = canvas.getContext('2d')
-            context.drawImage(image, 0, 0)
-            output.img = canvas.toDataURL('image/png')
+            if (image.width > 0 && image.height > 0) {
+              canvas.width = image.width
+              canvas.height = image.height
+              var context = canvas.getContext('2d')
+              context.drawImage(image, 0, 0)
+              output.img = canvas.toDataURL('image/png')
+            }
             callback(output)
           }
         })

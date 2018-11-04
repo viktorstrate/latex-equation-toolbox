@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-// import { isEqual } from 'lodash'
+import * as _ from 'lodash'
 // import AlgebraLatex from 'algebra-latex'
 const AlgebraLatex = require('algebra-latex')
 import { actions } from '../../reducers/calculations'
@@ -18,16 +18,25 @@ interface Props {
   setVariable(name: string, value: number | null)
 }
 
-class Variables extends React.Component<Props> {
-  inputChanged(event, variable) {
-    if (!isNaN(Number(event.target.value)) && event.target.value !== '') {
-      this.props.setVariable(variable, Number(event.target.value))
-    } else {
-      this.props.setVariable(variable, null)
+interface State {
+  simplifiedEl: React.ReactElement<any>
+}
+
+class Variables extends React.Component<Props, State> {
+  previousLatex: string
+
+  constructor(props) {
+    super(props)
+
+    this.previousLatex = ''
+    this.state = {
+      simplifiedEl: <div />,
     }
+
+    this.updateSimplify()
   }
 
-  render() {
+  updateSimplify() {
     let solution = null
     let solutionEl = null
 
@@ -60,6 +69,20 @@ class Variables extends React.Component<Props> {
       )
     }
 
+    this.setState({
+      simplifiedEl: solutionEl,
+    })
+  }
+
+  inputChanged(event, variable) {
+    if (!isNaN(Number(event.target.value)) && event.target.value !== '') {
+      this.props.setVariable(variable, Number(event.target.value))
+    } else {
+      this.props.setVariable(variable, null)
+    }
+  }
+
+  render() {
     const self = this
     const inputs = Object.keys(this.props.variables).map(v => (
       <div key={v}>
@@ -73,6 +96,10 @@ class Variables extends React.Component<Props> {
       </div>
     ))
 
+    if (this.props.latex != this.previousLatex) {
+      _.debounce(this.updateSimplify.bind(this), 400)
+    }
+
     let inputSection = null
     if (inputs.length > 0) {
       inputSection = (
@@ -85,7 +112,8 @@ class Variables extends React.Component<Props> {
 
     return (
       <div>
-        <Styles.Header>Simplified expression</Styles.Header> {solutionEl}
+        <Styles.Header>Simplified expression</Styles.Header>{' '}
+        {this.state.simplifiedEl}
         {inputSection}
       </div>
     )

@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as MathStyle from '../styles'
 import CopyButton from './CopyButton'
 const AlgebraLatex = require('algebra-latex')
+import * as _ from 'lodash'
 
 // import style from './style.sass'
 import loadMj2img from '../ImageExport/mathjax-setup'
@@ -37,30 +38,12 @@ export default class MathField extends React.Component<Props, State> {
     })
   }
 
-  delayedUpdateMath() {
-    let localPromise = new Promise(resolve => {
-      console.log('Waiting a sec to update')
-      setTimeout(resolve, 400)
-    })
-    this.newestPromise = localPromise
-
-    let self = this
-
-    localPromise.then(res => {
-      if (self.newestPromise === localPromise) {
-        self.updateMath()
-      } else {
-        console.log('A newer promise was found')
-      }
-    })
-  }
-
   render() {
     let self = this
     if (this.props.latex !== this.oldLatex) {
       this.oldLatex = this.props.latex
 
-      this.delayedUpdateMath()
+      _.debounce(this.updateMath, 400)
     }
 
     let mathString = null
