@@ -15,6 +15,7 @@ import { actions as layoutActions } from '../reducers/layout'
 const viewComponents = {
   'visual-input': import(/* webpackChunkName: "comp-visual-input" */ './VisualInput'),
   'code-input': import(/* webpackChunkName: "comp-code-input" */ './CodeInput'),
+  'regular-input': import(/* webpackChunkName: "comp-regular-input" */ './RegularInput'),
   symbols: import(/* webpackChunkName: "comp-symbols" */ './Symbols'),
   preview: import(/* webpackChunkName: "comp-preview" */ './Preview'),
   equations: import(/* webpackChunkName: "comp-equations" */ './Equations'),
@@ -27,6 +28,7 @@ export const views = {
   Editor: [
     ['visual-input', 'Visual input'],
     ['code-input', 'Code input'],
+    ['regular-input', 'Regular Math Input'],
     ['symbols', 'Symbols'],
   ],
   View: [

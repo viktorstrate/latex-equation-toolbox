@@ -37,6 +37,11 @@ window.MathJax = {
         MathJax.Hub.Queue(['Typeset', MathJax.Hub, wrapper])
         MathJax.Hub.Queue(function() {
           var mjOut = wrapper.getElementsByTagName('svg')[0]
+
+          if (typeof mjOut == 'undefined') {
+            return
+          }
+
           mjOut.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 
           // Example "22.676ex"
